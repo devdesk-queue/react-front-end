@@ -1,12 +1,13 @@
 const initState = {
     error: null,
-    loading: false
+    loading: false,
+    tickets: []
 }
 
-export const account = (state = initState, action) => {
-
-    //If it's an account action
-    if (action.type.includes('ACCOUNT')) {
+export const tickets = (state = initState, action) => {
+    
+    //If it's a ticket action
+    if (action.type.includes('TICKETS')) {
 
         //Get the type of action
         action.type.slice(action.type.lastIndexOf('_') + 1);
@@ -16,17 +17,20 @@ export const account = (state = initState, action) => {
             case 'INIT':
                 return {
                     error: null,
-                    loading: true
+                    loading: true,
+                    tickets: [...state.tickets]
                 }
             case 'SUCCESS':
                 return {
                     error: null,
-                    loading: false
+                    loading: false,
+                    tickets: [...action.payload]
                 }
             case 'ERROR':
                 return {
                     error: action.payload,
-                    loading: false
+                    loading: false,
+                    tickets: [...state.tickets]
                 }
             default:
                 return state;

@@ -5,6 +5,8 @@ import { Container, Row, Col } from 'reactstrap';
 import Navigation from './components/Navigation';
 import Home from './components/Home';
 import AccountForm from './components/AccountForm';
+import CreateTicket from './components/CreateTicket';
+import ViewTickets from './components/ViewTickets';
 
 export default class App extends Component {
     render() {
@@ -15,6 +17,8 @@ export default class App extends Component {
                     <Col>
                       <Navigation/>
                       <Route exact path="/" component={Home}/>
+                      <Route path="/view-tickets" component={ViewTickets}/>
+                      <Route path="/create-ticket" component={CreateTicket}/>
                       <Route path="/login" component={AccountForm}/>
                       <Route path="/register" component={AccountForm}/>
                     </Col>

@@ -42,10 +42,10 @@ export default class Navigation extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink tag={RRNavLink} exact to="/" activeClassName="active">Add Ticket</NavLink>
+                                <NavLink tag={RRNavLink} exact to="/view-tickets" activeClassName="active">View Tickets</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={RRNavLink} exact to="/" activeClassName="active">View Tickets</NavLink>
+                                <NavLink tag={RRNavLink} exact to="/create-ticket" activeClassName="active">Create Ticket</NavLink>
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>

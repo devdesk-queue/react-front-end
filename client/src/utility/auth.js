@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Route, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 export const axiosWithAuth = _ => {
     return axios.create({

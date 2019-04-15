@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {register} from '../actions/register';
-import {login} from '../actions/login';
+import {register} from '../actions/account/register';
+import {login} from '../actions/account/login';
 import {
     Container,
     Row,
@@ -153,8 +153,8 @@ class AccountForm extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {error: state.error, loading: state.loading}
+const mapStateToProps = ({account}) => {
+    return {error: account.error, loading: account.loading}
 }
 
 export default connect(mapStateToProps, {register, login})(AccountForm);
