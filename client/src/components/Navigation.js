@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink as RRNavLink} from 'react-router-dom';
 import {
-    Container,
-    Row,
-    Col,
     Collapse,
     Navbar,
     NavbarToggler,
@@ -39,12 +36,7 @@ export default class Navigation extends Component {
             <React.Fragment>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand tag={RRNavLink} to="/">
-                        <Container>
-                        <Row>
-                        <Col className="d-flex align-items-center"><img src={logo}/></Col>
-                        <Col className="d-flex align-items-center"> <span>DevDesk Queue</span></Col>
-                        </Row>
-                        </Container>
+                        <img src={logo}/>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
