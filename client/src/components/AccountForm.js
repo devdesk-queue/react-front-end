@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {register} from '../actions/register';
+import {login} from '../actions/login';
 import {
     Container,
     Row,
@@ -10,12 +13,12 @@ import {
     Input
 } from 'reactstrap';
 
-export default class AccountForm extends Component {
+class AccountForm extends Component {
     constructor(props) {
         super(props);
 
-        // This Component is used for both login and registration- Here we test which route
-        // the app is on to discern which fields are necessary in state.
+        // This Component is used for both login and registration- Here we test which
+        // route the app is on to discern which fields are necessary in state.
         if (props.match.path.includes('register')) {
 
             this.state = {
@@ -61,6 +64,7 @@ export default class AccountForm extends Component {
 
     render() {
 
+        //JSX assigned to variables to switch between login and register forms
         const confirmPassword = this
             .props
             .match
@@ -117,7 +121,7 @@ export default class AccountForm extends Component {
                         size: 6,
                         offset: 3
                     }}>
-                        <Form>
+                        <Form onSubmit={this.submitHandler}>
                             <FormGroup>
                                 <Label for="email">Email</Label>
                                 <Input
@@ -148,3 +152,9 @@ export default class AccountForm extends Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    return {error: state.error, loading: state.loading}
+}
+
+export default connect(mapStateToProps, {register, login})(AccountForm);

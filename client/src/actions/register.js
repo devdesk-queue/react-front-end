@@ -8,11 +8,11 @@ export const register = data => dispatch => {
     dispatch({
         type: REGISTER_INIT
     });
-    axios.get('register', data)
+    axios.put('registerAPIpath', data)
         .then(response => {
+            localStorage.setItem('token', response.data);
             dispatch({
-                type: REGISTER_SUCCESS,
-                payload: response.data
+                type: REGISTER_SUCCESS
             });
         })
         .catch(error => {

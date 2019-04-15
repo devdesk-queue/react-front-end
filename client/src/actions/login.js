@@ -8,11 +8,11 @@ export const login = data => dispatch => {
     dispatch({
         type: LOGIN_INIT
     });
-    axios.get('login', data)
+    axios.post('loginAPIpath', data)
         .then(response => {
+            localStorage.setItem('token', response.data);
             dispatch({
-                type: LOGIN_SUCCESS,
-                payload: response.data
+                type: LOGIN_SUCCESS
             });
         })
         .catch(error => {

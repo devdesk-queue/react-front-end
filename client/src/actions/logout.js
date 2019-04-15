@@ -8,11 +8,11 @@ export const logout = data => dispatch => {
     dispatch({
         type: LOGOUT_INIT
     });
-    axios.get('logout', data)
-        .then(response => {
+    axios.post('logoutAPIpath', data)
+        .then(_ => {
+            localStorage.setItem('token', null);
             dispatch({
-                type: LOGOUT_SUCCESS,
-                payload: response.data
+                type: LOGOUT_SUCCESS
             });
         })
         .catch(error => {
