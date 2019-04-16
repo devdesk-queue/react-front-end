@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {viewAll} from '../actions/tickets/viewAll';
-import {Container, Row, Col, Table} from 'reactstrap';
-import TicketListItem from './TicketListItem';
+import {Container, Row, Col} from 'reactstrap';
+import Ticket from './Ticket';
 
 class TicketList extends Component {
 
@@ -44,26 +44,13 @@ class TicketList extends Component {
                 "updated_at": "2019-04-15 07:16:35",
                 "categories": ["Administration", "ISA"]
             }
-        ].map(ticket => <TicketListItem key={ticket.ticket_id} ticket={ticket}/>);
+        ].map(ticket => <Ticket key={ticket.ticket_id} ticket={ticket}/>);
 
         return (
             <Container>
                 <Row>
                     <Col>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Created At</th>
-                                    <th>Student</th>
-                                    <th>Title</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tickets}
-                            </tbody>
-                        </Table>
-                        
+                        {tickets}
                     </Col>
                 </Row>
             </Container>

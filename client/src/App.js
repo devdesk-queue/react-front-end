@@ -19,7 +19,6 @@ export default class App extends Component {
                       <Navigation/>
                       <Route exact path="/" component={Home}/>
                       <Route path="/view-tickets" component={TicketList}/>
-                      <Route path="/view-ticket/:id" component={Ticket}/>
                       <Route path="/create-ticket" component={CreateTicket}/>
                       <Route path="/login" component={AccountForm}/>
                       <Route path="/register" component={AccountForm}/>

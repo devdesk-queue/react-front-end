@@ -23,6 +23,7 @@ class AccountForm extends Component {
 
             this.state = {
                 email: '',
+                username: '',
                 password: '',
                 password2: '',
                 role: 'student'
@@ -31,7 +32,7 @@ class AccountForm extends Component {
         } else {
 
             this.state = {
-                email: '',
+                username: '',
                 password: ''
             }
         }
@@ -49,6 +50,7 @@ class AccountForm extends Component {
         // Test if on the registration or login route- Then call the appropriate Redux
         // action
         event.preventDefault();
+
         this
             .props
             .match
@@ -56,10 +58,10 @@ class AccountForm extends Component {
             .includes('register')
             ? this
                 .props
-                .register(this.state)
+                .register({email: this.state.email, username: this.state.username, password: this.state.password})
             : this
                 .props
-                .login(this.state);
+                .login({username: this.state.username, password: this.state.password});
     }
 
     render() {
@@ -74,7 +76,7 @@ class AccountForm extends Component {
                 <FormGroup>
                     <Label for="password2">Confirm Password</Label>
                     <Input
-                        type="password2"
+                        type="password"
                         name="password2"
                         placeholder="password123"
                         value={this.state.password2}
@@ -112,6 +114,22 @@ class AccountForm extends Component {
             ? 'Register'
             : 'Login';
 
+        const email = this
+            .props
+            .match
+            .path
+            .includes('register')
+            ? <FormGroup>
+                    <Label for="email">Email</Label>
+                    <Input
+                        type="email"
+                        name="email"
+                        placeholder="your@email.com"
+                        value={this.state.email}
+                        onChange={this.changeHandler}/>
+                </FormGroup>
+            : null;
+
         return (
             <Container>
                 <Row>
@@ -122,13 +140,14 @@ class AccountForm extends Component {
                         offset: 3
                     }}>
                         <Form onSubmit={this.submitHandler}>
+                            {email}
                             <FormGroup>
-                                <Label for="email">Email</Label>
+                                <Label for="username">Username</Label>
                                 <Input
-                                    type="email"
-                                    name="email"
-                                    placeholder="your@email.com"
-                                    value={this.state.email}
+                                    type="text"
+                                    name="username"
+                                    placeholder="username"
+                                    value={this.state.username}
                                     onChange={this.changeHandler}/>
                             </FormGroup>
                             <FormGroup>
@@ -145,6 +164,8 @@ class AccountForm extends Component {
                             <Button type="submit">
                                 {buttonText}
                             </Button>
+                            <br/>
+                            <span className="text-danger">{this.props.error}</span>
                         </Form>
                     </Col>
                 </Row>

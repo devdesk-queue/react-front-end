@@ -8,6 +8,7 @@ export const register = data => dispatch => {
     dispatch({
         type: REGISTER_ACCOUNT_INIT
     });
+    console.log(data)
     axios.post('https://devdeskqueue.herokuapp.com/api/auth/register', data)
         .then(response => {
             console.log(response)

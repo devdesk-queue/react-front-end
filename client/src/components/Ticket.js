@@ -1,24 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {update} from '../actions/tickets/update';
+import {Card, CardTitle, CardText, Button} from 'reactstrap';
 
 class Ticket extends Component {
-    state = {
-        ticket: {}
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.tickets.tickets >= 1) {
-            this.setState({
-                ticket: this
-                    .props
-                    .tickets
-                    .tickets
-                    .find(t => t.ticket_id === this.props.match.params.id)
-            });
-        }
-    }
-
     render() {
         const {
             created_at,
@@ -29,25 +14,28 @@ class Ticket extends Component {
             ticket_id,
             title,
             tried
-        } = this.state.ticket;
+        } = this.props.ticket;
+
+        const date = new Date(created_at);
+        const dateString = `${date.getHours()}:${date.getMinutes()}`;
 
         return (
             <div>
-                <h1>{title}</h1>
-                <span>{created_at}</span>
-                <br/>
-                <span>{updated_at}</span>
-                <br/>
-                <span>{description}</span>
-                <br/>
-                <span>{status}</span>
-                <br/>
-                <span>{student_id}</span>
-                <br/>
-                <span>{ticket_id}</span>
-                <br/>
-                <span>{tried}</span>
-                <br/>
+                <Card inverse color="primary" className="text-center">
+                    <h2 className="display-4">{status}</h2>
+                    <Card body color="white" className="text-dark">
+                        <CardTitle>{title}</CardTitle>
+                        <CardText>{description}</CardText>
+                        <CardText>{tried}</CardText>
+                        <CardText>
+                            <Button outline size="sm">Checkout Ticket</Button>
+                        </CardText>
+                        <CardText>
+                            <Button outline size="sm">Close Ticket</Button>
+                        </CardText>
+                        <small className="text-muted">{dateString}</small>
+                    </Card>
+                </Card>
             </div>
         )
     }

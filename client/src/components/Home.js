@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import {Jumbotron, Button} from 'reactstrap';
 
 export default class Home extends Component {
@@ -6,14 +7,12 @@ export default class Home extends Component {
         return (
             <div>
                 <Jumbotron>
-                    <h1 className="display-3">Hello, world!</h1>
-                    <p className="lead">This is a simple hero unit, a simple Jumbotron-style
-                        component for calling extra attention to featured content or information.</p>
+                    <h1 className="display-3">DevDesk Queue</h1>
+                    <p className="lead">Help is just a moment away!</p>
                     <hr className="my-2"/>
-                    <p>It uses utility classes for typography and spacing to space content out
-                        within the larger container.</p>
+                    <p>DevDesk Queue is the place Lambda students can go to for assistance.Before we can get you some help, please register for an account!</p>
                     <p className="lead">
-                        <Button color="primary">Learn More</Button>
+                        <Link to="/register"><Button>Register Here</Button></Link>
                     </p>
                 </Jumbotron>
             </div>
