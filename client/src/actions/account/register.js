@@ -18,7 +18,7 @@ export const register = data => dispatch => {
         .catch(error => {
             dispatch({
                 type: REGISTER_ACCOUNT_ERROR,
-                payload: error.data
+                payload: error.message
             });
         });
 }

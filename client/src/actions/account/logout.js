@@ -2,7 +2,7 @@ export const LOGOUT_ACCOUNT_INIT = 'LOGOUT_ACCOUNT_INIT';
 export const LOGOUT_ACCOUNT_SUCCESS = 'LOGOUT_ACCOUNT_SUCCESS';
 export const LOGOUT_ACCOUNT_ERROR = 'LOGOUT_ACCOUNT_ERROR';
 
-export const logout = data => dispatch => {
+export const logout = () => dispatch => {
 
     dispatch({
         type: LOGOUT_ACCOUNT_INIT
@@ -20,7 +20,7 @@ export const logout = data => dispatch => {
 
         dispatch({
             type: LOGOUT_ACCOUNT_ERROR,
-            payload: error.data
+            payload: error.message
         });
 
     }
