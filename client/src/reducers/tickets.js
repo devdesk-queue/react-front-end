@@ -18,7 +18,6 @@ export const tickets = (state = initState, action) => {
 
     //If it's a ticket action
     if (action.type.includes('TICKETS')) {
-        console.log(action.type)
         const originalActionType = action.type;
 
         //Get the type of action

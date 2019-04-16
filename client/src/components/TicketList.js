@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {viewAll} from '../actions/tickets/viewAll';
-import {
-    Container,
-    Row,
-    Col
-} from 'reactstrap';
+import {Container, Row, Col, Table} from 'reactstrap';
+import TicketListItem from './TicketListItem';
 
 class TicketList extends Component {
 
@@ -31,37 +28,42 @@ class TicketList extends Component {
 
     render() {
 
-      // this
-      //   .props
-      //   .tickets
-      //   .tickets && this
-      //       .props
-      //       .tickets
-      //       .tickets
+        // this   .props   .tickets   .tickets && this       .props       .tickets
+        // .tickets
 
         const tickets = [
-          {
-            "ticket_id": 1,
-            "status": "resolved",
-            "title": "problem1",
-            "description": "big problem",
-            "tried": "cry",
-            "student_id": 2,
-            "admin_id": 1,
-            "created_at": "2019-04-15 07:16:35",
-            "updated_at": "2019-04-15 07:16:35",
-            "categories": [
-                "Administration",
-                "ISA"
-            ]
-          },
-        ].map(ticket => <span key={ticket.ticket_id}>{ticket.title}</span>);
+            {
+                "ticket_id": 1,
+                "status": "resolved",
+                "title": "problem1",
+                "description": "big problem",
+                "tried": "cry",
+                "student_id": 2,
+                "admin_id": 1,
+                "created_at": "2019-04-15 07:16:35",
+                "updated_at": "2019-04-15 07:16:35",
+                "categories": ["Administration", "ISA"]
+            }
+        ].map(ticket => <TicketListItem key={ticket.ticket_id} ticket={ticket}/>);
 
         return (
             <Container>
                 <Row>
                     <Col>
-                        {tickets}
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Created At</th>
+                                    <th>Student</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {tickets}
+                            </tbody>
+                        </Table>
+                        
                     </Col>
                 </Row>
             </Container>
