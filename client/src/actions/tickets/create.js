@@ -16,7 +16,7 @@ export const create = data => dispatch => {
                 payload: response.data
             });
         })
-        .catch(error => {
+        .catch(error => {console.log(error)
             dispatch({
                 type: CREATE_TICKETS_ERROR,
                 payload: error.message

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export default class TicketListItem extends Component {
     render() {
@@ -20,7 +21,7 @@ export default class TicketListItem extends Component {
                 <tr>
                     <th scope="row">{dateString}</th>
                     <td>{student_id}</td>
-                    <td>{title}</td>
+                    <td><Link to={`/view-ticket/${ticket_id}`}>{title}</Link></td>
                     <td>{status}</td>
                 </tr>
             </React.Fragment>
