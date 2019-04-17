@@ -1,6 +1,7 @@
 const initState = {
     error: null,
-    loading: false
+    loading: false,
+    info: {}
 }
 
 export const account = (state = initState, action) => {
@@ -18,17 +19,28 @@ export const account = (state = initState, action) => {
             case 'INIT':
                 return {
                     error: null,
-                    loading: true
+                    loading: true,
+                    info: state.info
                 }
             case 'SUCCESS':
-                return {
-                    error: null,
-                    loading: false
+                if(originalActionType.startsWith('INFO') || originalActionType.startsWith('LOGIN') || originalActionType.startsWith('REGISTER')) {
+                    return {
+                        error: null,
+                        loading: false,
+                        info: action.payload
+                    }
+                } else {
+                    return {
+                        error: null,
+                        loading: false,
+                        info: state.info
+                    }
                 }
             case 'ERROR':
                 return {
                     error: action.payload,
-                    loading: false
+                    loading: false,
+                    info: state.info
                 }
             default:
                 return state;

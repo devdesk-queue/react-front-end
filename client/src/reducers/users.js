@@ -43,7 +43,7 @@ export const users = (state = initState, action) => {
                                 state.users.map(user => {
                                     if (user.id === action.payload.id) {
                                         return action.payload;
-                                    } else return cat;
+                                    } else return user;
                                 })
                             ]
                         }

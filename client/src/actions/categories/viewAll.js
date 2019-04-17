@@ -9,7 +9,7 @@ export const viewAllCategories = _ => dispatch => {
         type: VIEWALL_CATEGORIES_INIT
     });
     axiosWithAuth()
-        .get('https://devdeskqueue-lite.herokuapp.com/api/categories')
+        .get('https://devdeskqueue.herokuapp.com/api/categories')
         .then(response => {
             dispatch({
                 type: VIEWALL_CATEGORIES_SUCCESS,

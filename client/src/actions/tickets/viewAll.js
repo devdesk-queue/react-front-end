@@ -9,7 +9,7 @@ export const viewAllTickets = _ => dispatch => {
         type: VIEWALL_TICKETS_INIT
     });
     axiosWithAuth()
-        .get('https://devdeskqueue-lite.herokuapp.com/api/tickets')
+        .get('https://devdeskqueue.herokuapp.com/api/tickets')
         .then(response => {
             dispatch({
                 type: VIEWALL_TICKETS_SUCCESS,

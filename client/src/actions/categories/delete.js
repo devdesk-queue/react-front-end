@@ -9,7 +9,7 @@ export const deleteCategory = id => dispatch => {
         type: DELETE_CATEGORIES_INIT
     });
     axiosWithAuth()
-        .delete(`https://devdeskqueue-lite.herokuapp.com/api/categories/${id}`)
+        .delete(`https://devdeskqueue.herokuapp.com/api/categories/${id}`)
         .then(response => {
             dispatch({
                 type: DELETE_CATEGORIES_SUCCESS,

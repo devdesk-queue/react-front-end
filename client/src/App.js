@@ -8,6 +8,7 @@ import AccountForm from './components/AccountForm';
 import CreateTicket from './components/CreateTicket';
 import TicketList from './components/TicketList';
 import {PrivateRoute} from './utility/auth';
+import AdminPanel from './components/AdminPanel';
 
 export default class App extends Component {
     render() {
@@ -27,6 +28,7 @@ export default class App extends Component {
                             <Route exact path="/" component={Home}/>
                             <PrivateRoute path="/view-tickets" component={TicketList}/>
                             <PrivateRoute path="/create-ticket" component={CreateTicket}/>
+                            <PrivateRoute path="/admin-panel" component={AdminPanel}/>
                             <Route path="/login" component={AccountForm}/>
                             <Route path="/register" component={AccountForm}/>
                         </Col>

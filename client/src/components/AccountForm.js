@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {register} from '../actions/account/register';
 import {login} from '../actions/account/login';
+import {accountInfo} from '../actions/account/info';
 import {
     Container,
     Row,
@@ -59,21 +60,17 @@ class AccountForm extends Component {
             ? this
                 .props
                 .register({email: this.state.email, username: this.state.username, password: this.state.password})
-                .then(_ => {
-                    this
-                        .props
-                        .history
-                        .push('/');
+                .then(response => {
+                    if (response)
+                        this.props.history.push('/');
                 })
             : this
                 .props
                 .login({username: this.state.username, password: this.state.password})
                 .then(response => {
-
-                    if (response) 
+                    if (response)
                         this.props.history.push('/');
-                    }
-                );
+                });
     }
 
     render() {
@@ -168,4 +165,4 @@ const mapStateToProps = ({account}) => {
     return {error: account.error, loading: account.loading}
 }
 
-export default connect(mapStateToProps, {register, login})(AccountForm);
+export default connect(mapStateToProps, {register, login, accountInfo})(AccountForm);

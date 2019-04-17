@@ -51,7 +51,7 @@ export const tickets = (state = initState, action) => {
                             loading: false,
                             tickets: [
                                 state.tickets.map(ticket => {
-                                    if (cat.ticket === action.payload.id) {
+                                    if (ticket.id === action.payload.id) {
                                         return action.payload;
                                     } else return ticket;
                                 })

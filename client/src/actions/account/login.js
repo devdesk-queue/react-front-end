@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {accountInfo} from './info';
 
 export const LOGIN_ACCOUNT_INIT = 'LOGIN_ACCOUNT_INIT';
 export const LOGIN_ACCOUNT_SUCCESS = 'LOGIN_ACCOUNT_SUCCESS';
@@ -8,13 +9,17 @@ export const login = data => dispatch => {
     dispatch({
         type: LOGIN_ACCOUNT_INIT
     });
-    return axios.post('https://devdeskqueue-lite.herokuapp.com/api/auth/login', data)
+    return axios.post('https://devdeskqueue.herokuapp.com/api/auth/login', data)
         .then(response => {
+            console.log(response)
+            //Set user token
             localStorage.setItem('token', response.data.token);
+            //Dispatch success action
             dispatch({
-                type: LOGIN_ACCOUNT_SUCCESS
+                type: LOGIN_ACCOUNT_SUCCESS,
+                payload: response.data.user
             });
-            return response.data;
+            return true;
         })
         .catch(error => {
             dispatch({

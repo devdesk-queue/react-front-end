@@ -9,7 +9,7 @@ export const deleteUser = id => dispatch => {
         type: DELETE_USERS_INIT
     });
     axiosWithAuth()
-        .delete(`https://devdeskqueue-lite.herokuapp.com/api/users/${id}`)
+        .delete(`https://devdeskqueue.herokuapp.com/api/users/${id}`)
         .then(response => {
             dispatch({
                 type: DELETE_USERS_SUCCESS,

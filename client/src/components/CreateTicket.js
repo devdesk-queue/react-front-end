@@ -47,7 +47,8 @@ class CreateTicket extends Component {
         event.preventDefault();
         this
             .props
-            .create(this.state.newTicket);
+            .create(this.state.newTicket)
+            .then(response=>response ? this.props.history.push('/') : null);
     }
 
     render() {
@@ -57,7 +58,7 @@ class CreateTicket extends Component {
             .categories
             .sort()
             .map(cat => {
-                return <option key={cat.id} value={cat.id}>{cat.name}</option>
+                return <option key={cat.id} value={cat.name}>{cat.name}</option>
             });
 
         return (

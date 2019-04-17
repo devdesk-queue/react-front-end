@@ -9,7 +9,7 @@ export const updateUser = id => dispatch => {
         type: UPDATE_USERS_INIT
     });
     axiosWithAuth()
-        .put(`https://devdeskqueue-lite.herokuapp.com/api/users/${id}`)
+        .put(`https://devdeskqueue.herokuapp.com/api/users/${id}`)
         .then(response => {
             dispatch({
                 type: UPDATE_USERS_SUCCESS,

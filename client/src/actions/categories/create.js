@@ -9,7 +9,7 @@ export const createCategory = newCategory => dispatch => {
         type: CREATE_CATEGORIES_INIT
     });
     axiosWithAuth()
-        .post('https://devdeskqueue-lite.herokuapp.com/api/categories', newCategory)
+        .post('https://devdeskqueue.herokuapp.com/api/categories', newCategory)
         .then(response => {
             dispatch({
                 type: CREATE_CATEGORIES_SUCCESS,

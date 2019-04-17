@@ -34,7 +34,7 @@ class TicketList extends Component {
         // "created_at": "2019-04-15 07:16:35",         "updated_at": "2019-04-15
         // 07:16:35",         "categories": ["Administration", "ISA"]     } ]
 
-        const tickets = this.props.tickets.map(ticket => <Ticket key={ticket.ticket_id} ticket={ticket}/>);
+        const tickets = this.props.tickets.map(ticket => <Ticket key={ticket.id} ticket={ticket}/>);
 
         return (
             <Container>

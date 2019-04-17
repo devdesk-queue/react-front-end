@@ -9,7 +9,7 @@ export const updateCategory = id => dispatch => {
         type: UPDATE_CATEGORIES_INIT
     });
     axiosWithAuth()
-        .put(`https://devdeskqueue-lite.herokuapp.com/api/categories/${id}`)
+        .put(`https://devdeskqueue.herokuapp.com/api/categories/${id}`)
         .then(response => {
             dispatch({
                 type: UPDATE_CATEGORIES_SUCCESS,

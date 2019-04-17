@@ -9,7 +9,7 @@ export const viewAllUsers = _ => dispatch => {
         type: VIEWALL_USERS_INIT
     });
     axiosWithAuth()
-        .get('https://devdeskqueue-lite.herokuapp.com/api/users')
+        .get('https://devdeskqueue.herokuapp.com/api/users')
         .then(response => {
             dispatch({
                 type: VIEWALL_USERS_SUCCESS,
