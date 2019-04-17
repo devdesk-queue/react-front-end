@@ -21,17 +21,17 @@ class Ticket extends Component {
 
         return (
             <div>
-                <Card inverse color="primary" className="text-center">
+                <Card inverse color="primary" className="text-center mt-3">
                     <h2 className="display-4">{status}</h2>
                     <Card body color="white" className="text-dark">
                         <CardTitle>{title}</CardTitle>
                         <CardText>{description}</CardText>
                         <CardText>{tried}</CardText>
                         <CardText>
-                            <Button outline size="sm">Checkout Ticket</Button>
+                            <Button size="sm">Checkout Ticket</Button>
                         </CardText>
                         <CardText>
-                            <Button outline size="sm">Close Ticket</Button>
+                            <Button size="sm">Close Ticket</Button>
                         </CardText>
                         <small className="text-muted">{dateString}</small>
                     </Card>

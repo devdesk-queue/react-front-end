@@ -59,9 +59,21 @@ class AccountForm extends Component {
             ? this
                 .props
                 .register({email: this.state.email, username: this.state.username, password: this.state.password})
+                .then(_ => {
+                    this
+                        .props
+                        .history
+                        .push('/');
+                })
             : this
                 .props
-                .login({username: this.state.username, password: this.state.password});
+                .login({username: this.state.username, password: this.state.password})
+                .then(response => {
+
+                    if (response) 
+                        this.props.history.push('/');
+                    }
+                );
     }
 
     render() {
@@ -81,27 +93,6 @@ class AccountForm extends Component {
                         placeholder="password123"
                         value={this.state.password2}
                         onChange={this.changeHandler}/>
-                </FormGroup>
-            )
-            : null;
-
-        const role = this
-            .props
-            .match
-            .path
-            .includes('register')
-            ? (
-                <FormGroup>
-                    <Label for="role">Role</Label>
-                    <Input
-                        type="select"
-                        name="role"
-                        id="role"
-                        value={this.state.role}
-                        onChange={this.changeHandler}>
-                        <option value="student">Student</option>
-                        <option value="helper">Helper</option>
-                    </Input>
                 </FormGroup>
             )
             : null;
@@ -160,8 +151,7 @@ class AccountForm extends Component {
                                     onChange={this.changeHandler}/>
                             </FormGroup>
                             {confirmPassword}
-                            {role}
-                            <Button type="submit">
+                            <Button block type="submit">
                                 {buttonText}
                             </Button>
                             <br/>

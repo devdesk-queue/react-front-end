@@ -18,7 +18,6 @@ import logo from './logo.png';
 export default class Navigation extends Component {
     constructor(props) {
         super(props);
-
         this.toggle = this
             .toggle
             .bind(this);
@@ -31,12 +30,17 @@ export default class Navigation extends Component {
             isOpen: !this.state.isOpen
         });
     }
+    logout = _ => {
+        localStorage.clear();
+        this.props.history.push('/');
+    }
     render() {
+        const token = localStorage.getItem('token');
         return (
             <React.Fragment>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand tag={RRNavLink} to="/">
-                        <img src={logo} alt="logo" />
+                        <img src={logo} alt="logo"/>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -52,16 +56,23 @@ export default class Navigation extends Component {
                                     Account
                                 </DropdownToggle>
                                 <DropdownMenu right>
-                                    <DropdownItem>
-                                        <NavLink tag={RRNavLink} exact to="/register" activeClassName="active">Register</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <NavLink tag={RRNavLink} exact to="/login" activeClassName="active">Login</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem divider/>
-                                    <DropdownItem>
-                                        Logout
-                                    </DropdownItem>
+                                    {token
+                                        ? <React.Fragment>
+                                                <DropdownItem divider/>
+                                                <DropdownItem onClick={this.logout}>
+                                                    Logout
+                                                </DropdownItem>
+                                            </React.Fragment>
+                                        : <React.Fragment>
+                                            <DropdownItem>
+                                                <NavLink tag={RRNavLink} exact to="/register" activeClassName="active">Register</NavLink>
+                                            </DropdownItem>
+                                            <DropdownItem>
+                                                <NavLink tag={RRNavLink} exact to="/login" activeClassName="active">Login</NavLink>
+                                            </DropdownItem>
+                                        </React.Fragment>
+}
+
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </Nav>

@@ -8,11 +8,9 @@ export const register = data => dispatch => {
     dispatch({
         type: REGISTER_ACCOUNT_INIT
     });
-    console.log(data)
-    axios.post('https://devdeskqueue.herokuapp.com/api/auth/register', data)
+    return axios.post('https://devdeskqueue.herokuapp.com/api/auth/register', data)
         .then(response => {
-            console.log(response)
-            localStorage.setItem('token', response.data);
+            localStorage.setItem('token', response.data.token);
             dispatch({
                 type: REGISTER_ACCOUNT_SUCCESS
             });
