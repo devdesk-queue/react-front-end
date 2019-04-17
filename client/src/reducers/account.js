@@ -9,7 +9,7 @@ export const account = (state = initState, action) => {
     if (action.type.includes('ACCOUNT')) {
 
         //Get the type of action
-        action.type.slice(action.type.lastIndexOf('_') + 1);
+        action.type = action.type.slice(action.type.lastIndexOf('_') + 1);
 
         //Update state
         switch (action.type) {

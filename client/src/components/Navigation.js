@@ -36,7 +36,7 @@ export default class Navigation extends Component {
             <React.Fragment>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand tag={RRNavLink} to="/">
-                        <img src={logo}/>
+                        <img src={logo} alt="logo" />
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>

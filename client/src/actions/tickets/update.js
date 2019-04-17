@@ -1,26 +1,24 @@
-import {
-    axiosWithAuth
-} from '../../utility/auth';
+import axios from 'axios';
 
-export const UPDATE_INIT = 'UPDATE_INIT';
-export const UPDATE_SUCCESS = 'UPDATE_SUCCESS';
-export const UPDATE_ERROR = 'UPDATE_ERROR';
+export const UPDATE_TICKETS_INIT = 'UPDATE_TICKETS_INIT';
+export const UPDATE_TICKETS_SUCCESS = 'UPDATE_TICKETS_SUCCESS';
+export const UPDATE_TICKETS_ERROR = 'UPDATE_TICKETS_ERROR';
 
 export const update = id => data => dispatch => {
     dispatch({
-        type: UPDATE_INIT
+        type: UPDATE_TICKETS_INIT
     });
-    axiosWithAuth.put(`http://localhost:5000/api/tickets/${id}`, data)
+    axios.put(`http://localhost:5000/api/tickets/${id}`, data)
         .then(response => {
             dispatch({
-                type: UPDATE_SUCCESS,
+                type: UPDATE_TICKETS_SUCCESS,
                 payload: response.data
             });
         })
         .catch(error => {
             dispatch({
-                type: UPDATE_ERROR,
-                payload: error.data
+                type: UPDATE_TICKETS_ERROR,
+                payload: error.message
             });
         });
 }

@@ -1,26 +1,25 @@
-import {
-    axiosWithAuth
-} from '../../utility/auth';
+import axios from 'axios';
 
-export const CREATE_INIT = 'CREATE_INIT';
-export const CREATE_SUCCESS = 'CREATE_SUCCESS';
-export const CREATE_ERROR = 'CREATE_ERROR';
+export const CREATE_TICKETS_INIT = 'CREATE_TICKETS_INIT';
+export const CREATE_TICKETS_SUCCESS = 'CREATE_TICKETS_SUCCESS';
+export const CREATE_TICKETS_ERROR = 'CREATE_TICKETS_ERROR';
 
 export const create = data => dispatch => {
+    console.log(data)
     dispatch({
-        type: CREATE_INIT
+        type: CREATE_TICKETS_INIT
     });
-    axiosWithAuth.post('http://localhost:5000/api/tickets', data)
+    axios.post('https://devdeskqueue.herokuapp.com/api/tickets', data)
         .then(response => {
             dispatch({
-                type: CREATE_SUCCESS,
+                type: CREATE_TICKETS_SUCCESS,
                 payload: response.data
             });
         })
-        .catch(error => {
+        .catch(error => {console.log(error)
             dispatch({
-                type: CREATE_ERROR,
-                payload: error.data
+                type: CREATE_TICKETS_ERROR,
+                payload: error.message
             });
         });
 }
