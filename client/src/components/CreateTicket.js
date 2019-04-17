@@ -22,7 +22,7 @@ class CreateTicket extends Component {
                 title: '', // string, max 256 chars, required
                 description: '', // string, required
                 tried: '', // string, optional
-                category: 'Async Redux - Redux Thunk', // string, required
+                category: '', // string, required
             }
         }
     }
