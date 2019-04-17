@@ -8,10 +8,12 @@ export const account = (state = initState, action) => {
     //If it's an account action
     if (action.type.includes('ACCOUNT')) {
 
-        //Get the type of action
+        //Store the original action type
+        const originalActionType = action.type;
+        //Get the lifecycle of action (init, success, or error)
         action.type = action.type.slice(action.type.lastIndexOf('_') + 1);
 
-        //Update state
+        //Update state based  the lifecycle of the action
         switch (action.type) {
             case 'INIT':
                 return {

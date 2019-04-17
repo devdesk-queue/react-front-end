@@ -1,3 +1,16 @@
+import {
+    CREATE_CATEGORIES_SUCCESS
+} from '../actions/categories/create';
+import {
+    DELETE_CATEGORIES_SUCCESS
+} from '../actions/categories/delete';
+import {
+    UPDATE_CATEGORIES_SUCCESS
+} from '../actions/categories/update';
+import {
+    VIEWALL_CATEGORIES_SUCCESS
+} from '../actions/categories/viewAll';
+
 const initState = {
     error: null,
     loading: false,
@@ -9,10 +22,12 @@ export const categories = (state = initState, action) => {
     //If it's an account action
     if (action.type.includes('CATEGORIES')) {
 
-        //Get the type of action
+        //Store the original action type
+        const originalActionType = action.type;
+        //Get the lifecycle of action (init, success, or error)
         action.type = action.type.slice(action.type.lastIndexOf('_') + 1);
 
-        //Update state
+        //Update state based  the lifecycle of the action
         switch (action.type) {
             case 'INIT':
                 return {
@@ -21,10 +36,43 @@ export const categories = (state = initState, action) => {
                     categories: [...state.categories]
                 }
             case 'SUCCESS':
-                return {
-                    error: null,
-                    loading: false,
-                    categories: [...action.payload]
+                //Update tickets array based on which action was successful
+                switch (originalActionType) {
+                    case CREATE_CATEGORIES_SUCCESS:
+                        return {
+                            error: null,
+                            loading: true,
+                            categories: [
+                                ...state.categories,
+                                action.payload
+                            ]
+                        }
+                    case UPDATE_CATEGORIES_SUCCESS:
+                        return {
+                            error: null,
+                            loading: false,
+                            categories: [
+                                state.categories.map(cat => {
+                                    if (cat.id === action.payload.id) {
+                                        return action.payload;
+                                    } else return cat;
+                                })
+                            ]
+                        }
+                    case VIEWALL_CATEGORIES_SUCCESS:
+                        return {
+                            error: null,
+                            loading: false,
+                            categories: [...action.payload]
+                        }
+                    case DELETE_CATEGORIES_SUCCESS:
+                        return {
+                            error: null,
+                            loading: false,
+                            categories: [
+                                state.categories.filter(cat => cat.id !== action.payload.id)
+                            ]
+                        }
                 }
             case 'ERROR':
                 return {
