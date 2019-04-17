@@ -17,7 +17,8 @@ export const categories = (state = initState, action) => {
             case 'INIT':
                 return {
                     error: null,
-                    loading: true
+                    loading: true,
+                    categories: [...state.categories]
                 }
             case 'SUCCESS':
                 return {
@@ -28,7 +29,8 @@ export const categories = (state = initState, action) => {
             case 'ERROR':
                 return {
                     error: action.payload,
-                    loading: false
+                    loading: false,
+                    categories: [...state.categories]
                 }
             default:
                 return state;

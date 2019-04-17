@@ -8,7 +8,7 @@ export const login = data => dispatch => {
     dispatch({
         type: LOGIN_ACCOUNT_INIT
     });
-    return axios.post('https://devdeskqueue.herokuapp.com/api/auth/login', data)
+    return axios.post('https://devdeskqueue-lite.herokuapp.com/api/auth/login', data)
         .then(response => {
             localStorage.setItem('token', response.data.token);
             dispatch({

@@ -9,7 +9,7 @@ export const update = id => data => dispatch => {
         type: UPDATE_TICKETS_INIT
     });
     axiosWithAuth()
-        .put(`http://localhost:5000/api/tickets/${id}`, data)
+        .put(`https://devdeskqueue-lite.herokuapp.com/api/tickets/${id}`, data)
         .then(response => {
             dispatch({
                 type: UPDATE_TICKETS_SUCCESS,

@@ -8,7 +8,7 @@ export const create = data => dispatch => {
     console.log(data)
     dispatch({type: CREATE_TICKETS_INIT});
     axiosWithAuth()
-        .post('https://devdeskqueue.herokuapp.com/api/tickets', data)
+        .post('https://devdeskqueue-lite.herokuapp.com/api/tickets', data)
         .then(response => {
             console.log(response);
             dispatch({type: CREATE_TICKETS_SUCCESS, payload: response.data});
