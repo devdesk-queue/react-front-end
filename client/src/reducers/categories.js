@@ -51,13 +51,11 @@ export const categories = (state = initState, action) => {
                         return {
                             error: null,
                             loading: false,
-                            categories: [
-                                state.categories.map(cat => {
+                            categories: state.categories.map(cat => {
                                     if (cat.id === action.payload.id) {
                                         return action.payload;
                                     } else return cat;
                                 })
-                            ]
                         }
                     case VIEWALL_CATEGORIES_SUCCESS:
                         return {
@@ -69,9 +67,7 @@ export const categories = (state = initState, action) => {
                         return {
                             error: null,
                             loading: false,
-                            categories: [
-                                state.categories.filter(cat => cat.id !== action.payload.id)
-                            ]
+                            categories: state.categories.filter(cat => cat.id !== action.payload)
                         }
                 }
             case 'ERROR':

@@ -13,9 +13,10 @@ import {
     DropdownMenu,
     DropdownItem
 } from 'reactstrap';
+import {connect} from 'react-redux';
 import logo from './logo.png';
 
-export default class Navigation extends Component {
+class Navigation extends Component {
     constructor(props) {
         super(props);
         this.toggle = this
@@ -39,6 +40,17 @@ export default class Navigation extends Component {
     }
     render() {
         const token = localStorage.getItem('token');
+
+        const admin = this.props.info && this.props.info.role === 'admin'
+            ? (
+                <React.Fragment>
+                    <DropdownItem>
+                        <NavLink tag={RRNavLink} exact to="/admin" activeClassName="active">Admin Panel</NavLink>
+                    </DropdownItem>
+                </React.Fragment>
+            )
+            : null;
+
         return (
             <React.Fragment>
                 <Navbar color="light" light expand="md">
@@ -61,9 +73,11 @@ export default class Navigation extends Component {
                                 <DropdownMenu right>
                                     {token
                                         ? <React.Fragment>
+
                                                 <DropdownItem>
-                                                    <NavLink tag={RRNavLink} exact to="/admin-panel" activeClassName="active">Admin Panel</NavLink>
+                                                    <NavLink tag={RRNavLink} exact to="/account" activeClassName="active">Account Panel</NavLink>
                                                 </DropdownItem>
+                                                {admin}
                                                 <DropdownItem divider/>
                                                 <DropdownItem onClick={this.logout}>
                                                     Logout
@@ -88,3 +102,9 @@ export default class Navigation extends Component {
         );
     }
 }
+
+const mapStateToProps = ({account}) => {
+    return {info: account.info}
+}
+
+export default connect(mapStateToProps)(Navigation)

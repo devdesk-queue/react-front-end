@@ -8,13 +8,14 @@ export const viewAllRoles = _ => dispatch => {
     dispatch({
         type: VIEWALL_ROLES_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .get('https://devdeskqueue.herokuapp.com/api/roles')
         .then(response => {
             dispatch({
                 type: VIEWALL_ROLES_SUCCESS,
                 payload: response.data
             });
+            return response.data;
         })
         .catch(error => {
             dispatch({

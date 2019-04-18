@@ -8,13 +8,14 @@ export const viewAllTickets = _ => dispatch => {
     dispatch({
         type: VIEWALL_TICKETS_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .get('https://devdeskqueue.herokuapp.com/api/tickets')
         .then(response => {
             dispatch({
                 type: VIEWALL_TICKETS_SUCCESS,
                 payload: response.data
             });
+            return response.data;
         })
         .catch(error => {
             dispatch({

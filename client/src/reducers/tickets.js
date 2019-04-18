@@ -49,13 +49,11 @@ export const tickets = (state = initState, action) => {
                         return {
                             error: null,
                             loading: false,
-                            tickets: [
-                                state.tickets.map(ticket => {
+                            tickets: state.tickets.map(ticket => {
                                     if (ticket.id === action.payload.id) {
                                         return action.payload;
                                     } else return ticket;
                                 })
-                            ]
                         }
                     case VIEWALL_TICKETS_SUCCESS:
                         return {

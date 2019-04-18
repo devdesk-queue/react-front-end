@@ -41,4 +41,4 @@ const mapStateToProps = ({tickets}) => {
     return {tickets: tickets.tickets, error: tickets.error, loading: tickets.loading}
 }
 
-export default connect(mapStateToProps, {update})(Ticket);
+export default connect(mapStateToProps, {})(Ticket);
