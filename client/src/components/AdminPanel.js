@@ -7,11 +7,6 @@ import {
     NavItem,
     NavLink,
     Button,
-    Card,
-    CardTitle,
-    CardText,
-    Row,
-    Col,
     Form,
     FormGroup,
     Label,
@@ -27,7 +22,9 @@ import {viewAllRoles} from '../actions/roles/viewAll';
 import {viewAllTickets} from '../actions/tickets/viewAll';
 
 //Actions to edit/delete stuff via the API
-import {deleteUser} from '../actions/users/delete'; //Todo: if user has tickets then internal server error
+import {updateTicket} from '../actions/tickets/update';
+import {updateUser} from '../actions/users/update'; //Unproccesable entry error - current password needed
+import {deleteUser} from '../actions/users/delete'; //If user has tickets then internal server error
 import {createCategory} from '../actions/categories/create';
 import {updateCategory} from '../actions/categories/update'; //Unproccesable entry error
 import {deleteCategory} from '../actions/categories/delete';
@@ -39,12 +36,15 @@ class AdminPanel extends Component {
         this.state = {
             activeTab: 'tickets',
             assignHelperToTicket: {
-                user: '',
+                ticket: '',
                 helper: ''
             },
             changeTicketStatus: {
                 ticket: '',
                 status: ''
+            },
+            deleteTicket: {
+                ticket: ''
             },
             createCategory: {
                 name: ''
@@ -56,34 +56,91 @@ class AdminPanel extends Component {
             deleteCategory: {
                 id: ''
             },
-            deleteTicket: {
-                ticket: ''
-            },
             changeUserRole: {
-                user: '',
-                role: ''
+                id: '',
+                role: 'student'
             },
             deleteUser: {
-                user: ''
+                id: ''
             }
         };
     }
 
     componentDidMount() {
 
-        //Ensure Redux store is filled with all necessary info for Admin Panel
+        // Ensure Redux store is filled with all necessary API data for Admin Panel Set
+        // default dropdown menu values after applicable response is received
+
         this
             .props
-            .viewAllCategories();
+            .viewAllCategories()
+            .then(response => {
+                //Set default options for category dropdown menus
+                this.setState({
+                    updateCategory: {
+                        ...this.state.updateCategory,
+                        id: response[0].id
+                    },
+                    deleteCategory: {
+                        id: response[0].id
+                    }
+                })
+            });
+
         this
             .props
-            .viewAllUsers();
+            .viewAllUsers()
+            .then(response => {
+                //Set default options for user dropdown menus
+                this.setState({
+                    assignHelperToTicket: {
+                        ...this.state.updateCategory,
+                        ticket: response
+                            .find(user => user.role === 'helper' || user.role === 'admin')
+                            .id
+                    },
+                    changeUserRole: {
+                        ...this.state.changeUserRole,
+                        id: response[0].id
+                    },
+                    deleteUser: {
+                        id: response[0].id
+                    }
+                });
+            });
+
         this
             .props
-            .viewAllRoles();
+            .viewAllRoles()
+            .then(response => {
+                //Set default options for role dropdown menus
+                this.setState({
+                    changeUserRole: {
+                        ...this.state.changeUserRole,
+                        role: response[0].name
+                    }
+                });
+            });
+
         this
             .props
-            .viewAllTickets();
+            .viewAllTickets()
+            .then(response => {
+                //Set default options for ticket dropdown menus
+                this.setState({
+                    assignHelperToTicket: {
+                        ...this.state.assignHelperToTicket,
+                        ticket: response[0].id
+                    },
+                    changeTicketStatus: {
+                        ...this.state.changeTicketStatus,
+                        ticket: response[0].id
+                    },
+                    deleteTicket: {
+                        ticket: response[0].id
+                    }
+                });
+            });
     }
     toggle = tab => {
         if (this.state.activeTab !== tab) {
@@ -113,14 +170,44 @@ class AdminPanel extends Component {
         event.preventDefault();
         this
             .props
-            .assignHelperToTicket(this.state.assignHelperToTicket)
+            .updateTicket({
+                id: this.state.assignHelperToTicket.ticket,
+                payload: {
+                    helper_id: this.state.assignHelperToTicket.helper,
+                    status: 'helping' //If ticket is being assigned to someone, then its status should probably always updated to open
+                }
+            });
     }
 
     changeTicketStatus = event => {
         event.preventDefault();
+
+        //See if the ticket already has a helper assigned
+        const applicableTicket = this
+            .props
+            .tickets
+            .tickets
+            .find(ticket => {
+                return ticket
+                    .id
+                    .toString() === this.state.changeTicketStatus.ticket
+            });
+
+        //Default payload
+        const payload = {
+            status: this.state.changeTicketStatus.status
+        }
+
+        //If a helper is already assigned then add the helper_id to the payload
+        if (applicableTicket.helper_id !== undefined && applicableTicket.helper_id !== null) {
+            payload.helper_id = applicableTicket.helper_id
+        }
+
+        // Else the user submitting the request will be assigned as the helper as per
+        // API defaults
         this
             .props
-            .changeTicketStatus(this.state.changeTicketStatus)
+            .updateTicket({id: this.state.changeTicketStatus.ticket, payload})
     }
 
     deleteTicket = event => {
@@ -155,14 +242,19 @@ class AdminPanel extends Component {
         event.preventDefault();
         this
             .props
-            .changeUserRole(this.state.changeUserRole);
+            .updateUser({
+                id: this.state.changeUserRole.id,
+                payload: {
+                    role: this.state.changeUserRole.role
+                }
+            });
     }
 
     deleteUser = event => {
         event.preventDefault();
         this
             .props
-            .deleteUser(this.state.deleteUser.user);
+            .deleteUser(this.state.deleteUser.id);
     }
 
     render() {
@@ -201,10 +293,10 @@ class AdminPanel extends Component {
             .roles
             .sort()
             .map(role => {
-                return <option key={role.id} value={role.id}>{role.name}</option>
+                return <option key={role.id} value={role.name}>{role.name}</option>
             });
 
-        const statusOptions = ['enQueue', 'open', 'resolved'].map(status => {
+        const statusOptions = ['pending', 'helping', 'resolved'].map(status => {
             return <option key={status} value={status}>{status}</option>
         });
 
@@ -380,8 +472,8 @@ class AdminPanel extends Component {
                                     <Label for="role">User</Label>
                                     <Input
                                         type="select"
-                                        name="changeUserRole-user"
-                                        value={this.state.changeUserRole.user}
+                                        name="changeUserRole-id"
+                                        value={this.state.changeUserRole.id}
                                         onChange={this.changeHandler}>
                                         {userOptions}
                                     </Input>
@@ -404,8 +496,8 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="deleteUser-user"
-                                        value={this.state.deleteUser.user}
+                                        name="deleteUser-id"
+                                        value={this.state.deleteUser.id}
                                         onChange={this.changeHandler}>
                                         {userOptions}
                                     </Input>
@@ -425,10 +517,12 @@ const mapStateToProps = state => {
 }
 
 const actionsUsed = {
+    updateTicket,
     viewAllCategories,
     viewAllUsers,
     viewAllRoles,
     viewAllTickets,
+    updateUser,
     deleteUser,
     createCategory,
     updateCategory,
