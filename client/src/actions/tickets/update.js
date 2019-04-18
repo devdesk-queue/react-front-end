@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosWithAuth} from '../../utility/auth';
 
 export const UPDATE_TICKETS_INIT = 'UPDATE_TICKETS_INIT';
 export const UPDATE_TICKETS_SUCCESS = 'UPDATE_TICKETS_SUCCESS';
@@ -8,7 +8,8 @@ export const update = id => data => dispatch => {
     dispatch({
         type: UPDATE_TICKETS_INIT
     });
-    axios.put(`http://localhost:5000/api/tickets/${id}`, data)
+    axiosWithAuth()
+        .put(`https://devdeskqueue.herokuapp.com/api/tickets/${id}`, data)
         .then(response => {
             dispatch({
                 type: UPDATE_TICKETS_SUCCESS,

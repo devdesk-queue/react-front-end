@@ -1,23 +1,23 @@
 import {
-    CREATE_TICKETS_SUCCESS
-} from '../actions/tickets/create';
+    DELETE_USERS_SUCCESS
+} from '../actions/users/delete';
 import {
-    UPDATE_TICKETS_SUCCESS
-} from '../actions/tickets/update';
+    UPDATE_USERS_SUCCESS
+} from '../actions/users/update';
 import {
-    VIEWALL_TICKETS_SUCCESS
-} from '../actions/tickets/viewAll';
+    VIEWALL_USERS_SUCCESS
+} from '../actions/users/viewAll';
 
 const initState = {
     error: null,
     loading: false,
-    tickets: []
+    users: []
 }
 
-export const tickets = (state = initState, action) => {
+export const users = (state = initState, action) => {
 
-    //If it's a tickets action
-    if (action.type.includes('TICKETS')) {
+    //If it's an users action
+    if (action.type.includes('USERS')) {
 
         //Store the original action type
         const originalActionType = action.type;
@@ -30,39 +30,35 @@ export const tickets = (state = initState, action) => {
                 return {
                     error: null,
                     loading: true,
-                    tickets: [...state.tickets]
+                    users: [...state.users]
                 }
             case 'SUCCESS':
-
                 //Update tickets array based on which action was successful
                 switch (originalActionType) {
-                    case CREATE_TICKETS_SUCCESS:
-                        return {
-                            error: null,
-                            loading: true,
-                            tickets: [
-                                ...state.tickets,
-                                action.payload
-                            ]
-                        }
-                    case UPDATE_TICKETS_SUCCESS:
+                    case UPDATE_USERS_SUCCESS:
                         return {
                             error: null,
                             loading: false,
-                            tickets: [
-                                state.tickets.map(ticket => {
-                                    if (ticket.id === action.payload.id) {
+                            users: [
+                                state.users.map(user => {
+                                    if (user.id === action.payload.id) {
                                         return action.payload;
-                                    } else return ticket;
+                                    } else return user;
                                 })
                             ]
                         }
-                    case VIEWALL_TICKETS_SUCCESS:
+                    case VIEWALL_USERS_SUCCESS:
                         return {
                             error: null,
                             loading: false,
-                            tickets: [
-                                ...action.payload
+                            users: [...action.payload]
+                        }
+                    case DELETE_USERS_SUCCESS:
+                        return {
+                            error: null,
+                            loading: false,
+                            users: [
+                                state.users.filter(user => user.id !== action.payload.id)
                             ]
                         }
                 }
@@ -70,7 +66,7 @@ export const tickets = (state = initState, action) => {
                 return {
                     error: action.payload,
                     loading: false,
-                    tickets: [...state.tickets]
+                    users: [...state.users]
                 }
             default:
                 return state;

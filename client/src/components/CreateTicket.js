@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {create} from '../actions/tickets/create';
+import {viewAllCategories} from '../actions/categories/viewAll';
 import {
     Container,
     Row,
@@ -16,21 +17,29 @@ class CreateTicket extends Component {
     constructor(props) {
         super(props);
 
-        //Todo: pull student_id from API once auth endpoint is available
-
         this.state = {
-            title: '', // string, max 256 chars, required
-            description: '', // string, required
-            tried: '', // string, optional
-            category: 'Async Redux - Redux Thunk', // string, required
-            student_id: 1, // integer, required
+            newTicket: {
+                title: '', // string, max 256 chars, required
+                description: '', // string, required
+                tried: '', // string, optional
+                category: '', // string, required
+            }
         }
+    }
+
+    componentDidMount() {
+        this
+            .props
+            .viewAllCategories();
     }
 
     changeHandler = event => {
         //Handles every input field change- Updates state
         this.setState({
-            [event.target.name]: event.target.value
+            newTicket: {
+                ...this.state.newTicket,
+                [event.target.name]: event.target.value
+            }
         });
     }
 
@@ -38,67 +47,19 @@ class CreateTicket extends Component {
         event.preventDefault();
         this
             .props
-            .create(this.state);
+            .create(this.state.newTicket)
+            .then(response=>response ? this.props.history.push('/') : null);
     }
 
     render() {
 
-        const validCategories = [
-            'User Interface I',
-            'User Interface II',
-            'User Interface III',
-            'Git for Web Development',
-            'Responsive Design I',
-            'Responsive Design II',
-            'Preprocessing I',
-            'Preprocessing II',
-            'JavaScript I',
-            'JavaScript II',
-            'JavaScript III',
-            'JavaScript IV',
-            'DOM I',
-            'DOM II',
-            'Components I',
-            'Components II',
-            'Build Week: User Interface',
-            'Functional Components I',
-            'Functional Components II',
-            'Class Components I',
-            'Class Components II',
-            'React Tooling',
-            'The React Lifecycle',
-            'React Composition Patterns',
-            'CSS in JS',
-            'React Router I',
-            'React Router II',
-            'HTTP / AJAX I',
-            'HTTP / AJAX II',
-            'Redux Fundamentals I',
-            'Redux Fundamentals II',
-            'Async Redux - Redux Thunk',
-            'Redux Middleware / Authentication',
-            'Build Week: Front End',
-            'Introduction to Node.js and Express',
-            'Server-side Routing',
-            'Express Middleware',
-            'Deployment and Best Practices',
-            'Introduction to Relational Databases and SQL',
-            'Inserting and Modifying Data',
-            'Querying Data',
-            'Migrations and Seeding',
-            'Introduction to Data Modeling',
-            'Introduction to Authentication',
-            'Using Sessions and Cookies',
-            'Using JSON Web Tokens (JWT)',
-            'Client Side Authentication',
-            'Testing I',
-            'Testing II',
-            'Testing III',
-            'Testing IV',
-            'Build Week: Back End'
-        ];
-
-        const options = validCategories.sort().map(cat => <option key={cat} value={cat}>{cat}</option>);
+        const options = this
+            .props
+            .categories
+            .sort()
+            .map(cat => {
+                return <option key={cat.id} value={cat.name}>{cat.name}</option>
+            });
 
         return (
             <Container>
@@ -149,9 +110,10 @@ class CreateTicket extends Component {
                                 </Input>
                             </FormGroup>
 
-                            <Button type="submit">
+                            <Button block type="submit">
                                 Create Ticket
                             </Button>
+                            <span className="text-danger">{this.props.error}</span>
                         </Form>
                     </Col>
                 </Row>
@@ -160,8 +122,8 @@ class CreateTicket extends Component {
     }
 }
 
-const mapStateToProps = ({tickets}) => {
-    return {error: tickets.error, loading: tickets.loading}
+const mapStateToProps = ({tickets, categories}) => {
+    return {error: tickets.error, loading: tickets.loading, categories: categories.categories}
 }
 
-export default connect(mapStateToProps, {create})(CreateTicket);
+export default connect(mapStateToProps, {create, viewAllCategories})(CreateTicket);

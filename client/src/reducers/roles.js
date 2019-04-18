@@ -1,13 +1,13 @@
 const initState = {
     error: null,
     loading: false,
-    info: {}
+    roles: []
 }
 
-export const account = (state = initState, action) => {
+export const roles = (state = initState, action) => {
 
-    //If it's an account action
-    if (action.type.includes('ACCOUNT')) {
+    //If it's a roles action
+    if (action.type.includes('ROLES')) {
 
         //Store the original action type
         const originalActionType = action.type;
@@ -20,27 +20,19 @@ export const account = (state = initState, action) => {
                 return {
                     error: null,
                     loading: true,
-                    info: state.info
+                    roles: state.roles
                 }
             case 'SUCCESS':
-                if(originalActionType.startsWith('INFO') || originalActionType.startsWith('LOGIN') || originalActionType.startsWith('REGISTER')) {
-                    return {
-                        error: null,
-                        loading: false,
-                        info: action.payload
-                    }
-                } else {
-                    return {
-                        error: null,
-                        loading: false,
-                        info: state.info
-                    }
+                return {
+                    error: null,
+                    loading: false,
+                    roles: action.payload
                 }
             case 'ERROR':
                 return {
                     error: action.payload,
                     loading: false,
-                    info: state.info
+                    roles: state.roles
                 }
             default:
                 return state;

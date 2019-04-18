@@ -3,11 +3,13 @@ import axios from 'axios';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-export const axiosWithAuth = _ => {
+export const axiosWithAuth = () => {
+    const token = localStorage.getItem('token');
+
     return axios.create({
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': localStorage.getItem('token')
+            Authorization: token
         }
     });
 }
@@ -16,19 +18,15 @@ const PrivateRouteComponent = ({
     component: Component,
     error,
     ...rest
-}) => Component => {
-    return (
-        <Route
-            {...rest}
-            render={props => {
-            if (localStorage.getItem('token') && !error) {
-                return <Component {...props}/>
-            } else {
-                return <Redirect to="/"/>
-            }
-        }}/>
-    )
-}
+}) => <Route
+    {...rest}
+    render={props => {
+    if (localStorage.getItem('token') && !error) {
+        return <Component {...props}/>
+    } else {
+        return <Redirect to='/'/>
+    }
+}}/>
 
 const mapStateToProps = ({error}) => ({error});
 
