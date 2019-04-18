@@ -13,7 +13,7 @@ export const deleteCategory = id => dispatch => {
         .then(response => {
             dispatch({
                 type: DELETE_CATEGORIES_SUCCESS,
-                payload: response.data
+                payload: Number(response.data.id)
             });
         })
         .catch(error => {

@@ -4,12 +4,12 @@ export const UPDATE_CATEGORIES_INIT = 'UPDATE_CATEGORIES_INIT';
 export const UPDATE_CATEGORIES_SUCCESS = 'UPDATE_CATEGORIES_SUCCESS';
 export const UPDATE_CATEGORIES_ERROR = 'UPDATE_CATEGORIES_ERROR';
 
-export const updateCategory = id => dispatch => {
+export const updateCategory = data => dispatch => {
     dispatch({
         type: UPDATE_CATEGORIES_INIT
     });
     axiosWithAuth()
-        .put(`https://devdeskqueue.herokuapp.com/api/categories/${id}`)
+        .put(`https://devdeskqueue.herokuapp.com/api/categories/${data.id}`, {name: data.name})
         .then(response => {
             dispatch({
                 type: UPDATE_CATEGORIES_SUCCESS,

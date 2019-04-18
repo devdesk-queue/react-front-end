@@ -19,10 +19,18 @@ import {
 } from 'reactstrap';
 import classnames from 'classnames';
 import DefaultCard from './DefaultCard';
+
+//Retrieve necessary data from API
 import {viewAllCategories} from '../actions/categories/viewAll';
 import {viewAllUsers} from '../actions/users/viewAll';
 import {viewAllRoles} from '../actions/roles/viewAll';
 import {viewAllTickets} from '../actions/tickets/viewAll';
+
+//Actions to edit/delete stuff via the API
+import {deleteUser} from '../actions/users/delete'; //Todo: if user has tickets then internal server error
+import {createCategory} from '../actions/categories/create';
+import {updateCategory} from '../actions/categories/update'; //Unproccesable entry error
+import {deleteCategory} from '../actions/categories/delete';
 
 class AdminPanel extends Component {
     constructor(props) {
@@ -41,12 +49,12 @@ class AdminPanel extends Component {
             createCategory: {
                 name: ''
             },
-            editCategory: {
-                category: '',
+            updateCategory: {
+                id: '',
                 name: ''
             },
             deleteCategory: {
-                category: ''
+                id: ''
             },
             deleteTicket: {
                 ticket: ''
@@ -102,35 +110,59 @@ class AdminPanel extends Component {
     }
 
     assignHelperToTicket = event => {
-        this.props.assignHelperToTicket(this.state.assignHelperToTicket)
+        event.preventDefault();
+        this
+            .props
+            .assignHelperToTicket(this.state.assignHelperToTicket)
     }
 
     changeTicketStatus = event => {
-        this.props.changeTicketStatus(this.state.changeTicketStatus)
+        event.preventDefault();
+        this
+            .props
+            .changeTicketStatus(this.state.changeTicketStatus)
     }
 
     deleteTicket = event => {
-        this.props.deleteTicket(this.state.deleteTicket)
+        event.preventDefault();
+        this
+            .props
+            .deleteTicket(this.state.deleteTicket);
     }
 
-    createCategory= event => {
-        this.props.createCategory(this.state.createCategory)
+    createCategory = event => {
+        event.preventDefault();
+        this
+            .props
+            .createCategory(this.state.createCategory);
     }
 
-    editCategory = event => {
-        this.props.editCategory(this.state.editCategory)
+    updateCategory = event => {
+        event.preventDefault();
+        this
+            .props
+            .updateCategory(this.state.updateCategory);
     }
 
     deleteCategory = event => {
-        this.props.deleteCategory(this.state.deleteCategory)
+        event.preventDefault();
+        this
+            .props
+            .deleteCategory(this.state.deleteCategory.id);
     }
 
     changeUserRole = event => {
-        this.props.changeUserRole(this.state.changeUserRole)
+        event.preventDefault();
+        this
+            .props
+            .changeUserRole(this.state.changeUserRole);
     }
 
     deleteUser = event => {
-        this.props.deleteUser(this.state.deleteUser)
+        event.preventDefault();
+        this
+            .props
+            .deleteUser(this.state.deleteUser.user);
     }
 
     render() {
@@ -141,7 +173,7 @@ class AdminPanel extends Component {
             .categories
             .sort()
             .map(cat => {
-                return <option key={cat.id} value={cat.name}>{cat.name}</option>
+                return <option key={cat.id} value={cat.id}>{cat.name}</option>
             });
 
         const userOptions = this
@@ -305,12 +337,12 @@ class AdminPanel extends Component {
                             </Form>
                         </DefaultCard>
                         <DefaultCard title="Edit A Category">
-                            <Form onSubmit={this.editCategory}>
+                            <Form onSubmit={this.updateCategory}>
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="editCategory-category"
-                                        value={this.state.editCategory.category}
+                                        name="updateCategory-id"
+                                        value={this.state.updateCategory.id}
                                         onChange={this.changeHandler}>
                                         {categoryOptions}
                                     </Input>
@@ -318,9 +350,9 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="text"
-                                        name="editCategory-name"
+                                        name="updateCategory-name"
                                         placeholder="New Name Of Category"
-                                        value={this.state.editCategory.name}
+                                        value={this.state.updateCategory.name}
                                         onChange={this.changeHandler}/>
                                 </FormGroup>
                                 <Button type="submit">Edit Category</Button>
@@ -331,8 +363,8 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="deleteCategory-category"
-                                        value={this.state.deleteCategory.category}
+                                        name="deleteCategory-id"
+                                        value={this.state.deleteCategory.id}
                                         onChange={this.changeHandler}>
                                         {categoryOptions}
                                     </Input>
@@ -392,4 +424,15 @@ const mapStateToProps = state => {
     return state;
 }
 
-export default connect(mapStateToProps, {viewAllCategories, viewAllUsers, viewAllRoles, viewAllTickets})(AdminPanel)
+const actionsUsed = {
+    viewAllCategories,
+    viewAllUsers,
+    viewAllRoles,
+    viewAllTickets,
+    deleteUser,
+    createCategory,
+    updateCategory,
+    deleteCategory
+}
+
+export default connect(mapStateToProps, actionsUsed)(AdminPanel)

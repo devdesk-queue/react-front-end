@@ -57,9 +57,7 @@ export const users = (state = initState, action) => {
                         return {
                             error: null,
                             loading: false,
-                            users: [
-                                state.users.filter(user => user.id !== action.payload.id)
-                            ]
+                            users: state.users.filter(user => user.id !== action.payload.id)
                         }
                 }
             case 'ERROR':
