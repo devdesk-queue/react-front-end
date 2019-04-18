@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Route, withRouter} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
+import {connect} from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 import Navigation from './components/Navigation';
 import Home from './components/Home';
@@ -9,8 +11,18 @@ import CreateTicket from './components/CreateTicket';
 import TicketList from './components/TicketList';
 import {PrivateRoute} from './utility/auth';
 import AdminPanel from './components/AdminPanel';
+import {accountInfo} from './actions/account/info';
 
-export default class App extends Component {
+class App extends Component {
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+        if (this.props.info.role === undefined && token) {
+            const decodedToken = jwtDecode(token);
+            this
+                .props
+                .accountInfo(decodedToken.subject);
+        }
+    }
     render() {
         const NavigationWithRouter = withRouter(Navigation);
         return (
@@ -38,3 +50,9 @@ export default class App extends Component {
         )
     }
 }
+
+const mapStateToProps = ({account}) => {
+    return {info: account.info}
+}
+
+export default connect(mapStateToProps, {accountInfo})(App);
