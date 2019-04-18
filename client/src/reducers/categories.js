@@ -19,7 +19,7 @@ const initState = {
 
 export const categories = (state = initState, action) => {
 
-    //If it's an account action
+    //If it's an categories action
     if (action.type.includes('CATEGORIES')) {
 
         //Store the original action type

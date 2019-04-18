@@ -16,7 +16,7 @@ const initState = {
 
 export const tickets = (state = initState, action) => {
 
-    //If it's a ticket action
+    //If it's a tickets action
     if (action.type.includes('TICKETS')) {
 
         //Store the original action type

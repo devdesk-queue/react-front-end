@@ -32,7 +32,10 @@ export default class Navigation extends Component {
     }
     logout = _ => {
         localStorage.clear();
-        this.props.history.push('/');
+        this
+            .props
+            .history
+            .push('/');
     }
     render() {
         const token = localStorage.getItem('token');
@@ -58,6 +61,9 @@ export default class Navigation extends Component {
                                 <DropdownMenu right>
                                     {token
                                         ? <React.Fragment>
+                                                <DropdownItem>
+                                                    <NavLink tag={RRNavLink} exact to="/admin-panel" activeClassName="active">Admin Panel</NavLink>
+                                                </DropdownItem>
                                                 <DropdownItem divider/>
                                                 <DropdownItem onClick={this.logout}>
                                                     Logout

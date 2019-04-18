@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {update} from '../actions/tickets/update';
 import {Card, CardTitle, CardText, Button} from 'reactstrap';
+import DefaultCard from './DefaultCard';
 
 class Ticket extends Component {
     render() {
@@ -20,23 +21,18 @@ class Ticket extends Component {
         const dateString = `${date.getHours()}:${date.getMinutes()}`;
 
         return (
-            <div>
-                <Card inverse color="primary" className="text-center mt-3">
-                    <h2 className="display-4">{status}</h2>
-                    <Card body color="white" className="text-dark">
-                        <CardTitle>{title}</CardTitle>
-                        <CardText>{description}</CardText>
-                        <CardText>{tried}</CardText>
-                        <CardText>
-                            <Button size="sm">Checkout Ticket</Button>
-                        </CardText>
-                        <CardText>
-                            <Button size="sm">Close Ticket</Button>
-                        </CardText>
-                        <small className="text-muted">{dateString}</small>
-                    </Card>
-                </Card>
-            </div>
+            <DefaultCard title={status}>
+                <CardTitle>{title}</CardTitle>
+                <CardText>{description}</CardText>
+                <CardText>{tried}</CardText>
+                <CardText>
+                    <Button size="sm">Checkout Ticket</Button>
+                </CardText>
+                <CardText>
+                    <Button size="sm">Close Ticket</Button>
+                </CardText>
+                <small className="text-muted">{dateString}</small>
+            </DefaultCard>
         )
     }
 }

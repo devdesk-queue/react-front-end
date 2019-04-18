@@ -8,6 +8,9 @@ import {
     categories
 } from './categories';
 import {
+    roles
+} from './roles';
+import {
     tickets
 } from './tickets';
 import {
@@ -17,6 +20,7 @@ import {
 export const rootReducer = combineReducers({
     account,
     categories,
+    roles,
     tickets,
     users
 });

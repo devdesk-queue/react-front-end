@@ -16,7 +16,7 @@ const initState = {
 
 export const users = (state = initState, action) => {
 
-    //If it's an account action
+    //If it's an users action
     if (action.type.includes('USERS')) {
 
         //Store the original action type
