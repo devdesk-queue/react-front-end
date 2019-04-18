@@ -14,7 +14,7 @@ import {
     DropdownItem
 } from 'reactstrap';
 import {connect} from 'react-redux';
-import logo from './logo.png';
+import logo from './logo.svg';
 
 class Navigation extends Component {
     constructor(props) {
@@ -55,7 +55,7 @@ class Navigation extends Component {
             <React.Fragment>
                 <Navbar color="light" light expand="md">
                     <NavbarBrand tag={RRNavLink} to="/">
-                        <img src={logo} alt="logo"/>
+                        <img src={logo} alt="logo" height="80px"/>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
