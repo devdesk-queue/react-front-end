@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {accountInfo} from './info';
 
 export const REGISTER_ACCOUNT_INIT = 'REGISTER_ACCOUNT_INIT';
 export const REGISTER_ACCOUNT_SUCCESS = 'REGISTER_ACCOUNT_SUCCESS';

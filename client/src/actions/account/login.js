@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {accountInfo} from './info';
 
 export const LOGIN_ACCOUNT_INIT = 'LOGIN_ACCOUNT_INIT';
 export const LOGIN_ACCOUNT_SUCCESS = 'LOGIN_ACCOUNT_SUCCESS';
