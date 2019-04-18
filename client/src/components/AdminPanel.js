@@ -29,11 +29,41 @@ class AdminPanel extends Component {
         super(props);
 
         this.state = {
-            activeTab: 'tickets'
+            activeTab: 'tickets',
+            assignHelperToTicket: {
+                user: '',
+                helper: ''
+            },
+            changeTicketStatus: {
+                ticket: '',
+                status: ''
+            },
+            createCategory: {
+                name: ''
+            },
+            editCategory: {
+                category: '',
+                name: ''
+            },
+            deleteCategory: {
+                category: ''
+            },
+            deleteTicket: {
+                ticket: ''
+            },
+            changeUserRole: {
+                user: '',
+                role: ''
+            },
+            deleteUser: {
+                user: ''
+            }
         };
     }
 
     componentDidMount() {
+
+        //Ensure Redux store is filled with all necessary info for Admin Panel
         this
             .props
             .viewAllCategories();
@@ -52,6 +82,57 @@ class AdminPanel extends Component {
             this.setState({activeTab: tab});
         }
     }
+
+    changeHandler = event => {
+
+        // Name fields use a delimiter of - The value before the dash is the object in
+        // state That is assigned specifically to that form The value after the dash is
+        // the property in that form's object in state
+        const storeKeys = event
+            .target
+            .name
+            .split('-');
+
+        this.setState({
+            [storeKeys[0]]: {
+                ...this.state[storeKeys[0]],
+                [storeKeys[1]]: event.target.value
+            }
+        });
+    }
+
+    assignHelperToTicket = event => {
+        this.props.assignHelperToTicket(this.state.assignHelperToTicket)
+    }
+
+    changeTicketStatus = event => {
+        this.props.changeTicketStatus(this.state.changeTicketStatus)
+    }
+
+    deleteTicket = event => {
+        this.props.deleteTicket(this.state.deleteTicket)
+    }
+
+    createCategory= event => {
+        this.props.createCategory(this.state.createCategory)
+    }
+
+    editCategory = event => {
+        this.props.editCategory(this.state.editCategory)
+    }
+
+    deleteCategory = event => {
+        this.props.deleteCategory(this.state.deleteCategory)
+    }
+
+    changeUserRole = event => {
+        this.props.changeUserRole(this.state.changeUserRole)
+    }
+
+    deleteUser = event => {
+        this.props.deleteUser(this.state.deleteUser)
+    }
+
     render() {
 
         const categoryOptions = this
@@ -67,6 +148,16 @@ class AdminPanel extends Component {
             .props
             .users
             .users
+            .sort()
+            .map(user => {
+                return <option key={user.id} value={user.id}>{user.username}</option>
+            });
+
+        const helperOptions = this
+            .props
+            .users
+            .users
+            .filter(user => user.role === 'helper' || user.role === 'admin')
             .sort()
             .map(user => {
                 return <option key={user.id} value={user.id}>{user.username}</option>
@@ -135,13 +226,13 @@ class AdminPanel extends Component {
                 <TabContent activeTab={this.state.activeTab}>
                     <TabPane tabId="tickets">
                         <DefaultCard title="Assign Helper To Ticket">
-                            <Form onSubmit={this.assignHelper}>
+                            <Form onSubmit={this.assignHelperToTicket}>
                                 <FormGroup>
                                     <Label for="role">Ticket</Label>
                                     <Input
                                         type="select"
-                                        name="ticket"
-                                        value={this.state.ticket}
+                                        name="assignHelperToTicket-ticket"
+                                        value={this.state.assignHelperToTicket.ticket}
                                         onChange={this.changeHandler}>
                                         {ticketOptions}
                                     </Input>
@@ -150,23 +241,23 @@ class AdminPanel extends Component {
                                     <Label for="role">Helper</Label>
                                     <Input
                                         type="select"
-                                        name="helper"
-                                        value={this.state.helper}
+                                        name="assignHelperToTicket-helper"
+                                        value={this.state.assignHelperToTicket.helper}
                                         onChange={this.changeHandler}>
-                                        {userOptions}
+                                        {helperOptions}
                                     </Input>
                                 </FormGroup>
                                 <Button type="submit">Assign Helper</Button>
                             </Form>
                         </DefaultCard>
                         <DefaultCard title="Change Ticket Status">
-                            <Form onSubmit={this.changeStatus}>
+                            <Form onSubmit={this.changeTicketStatus}>
                                 <FormGroup>
                                     <Label for="role">Ticket</Label>
                                     <Input
                                         type="select"
-                                        name="ticket"
-                                        value={this.state.ticket}
+                                        name="changeTicketStatus-ticket"
+                                        value={this.state.changeTicketStatus.ticket}
                                         onChange={this.changeHandler}>
                                         {ticketOptions}
                                     </Input>
@@ -175,8 +266,8 @@ class AdminPanel extends Component {
                                     <Label for="role">New Status</Label>
                                     <Input
                                         type="select"
-                                        name="status"
-                                        value={this.state.status}
+                                        name="changeTicketStatus-status"
+                                        value={this.state.changeTicketStatus.status}
                                         onChange={this.changeHandler}>
                                         {statusOptions}
                                     </Input>
@@ -189,8 +280,8 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="deleteTicket"
-                                        value={this.state.deleteTicket}
+                                        name="deleteTicket-ticket"
+                                        value={this.state.deleteTicket.ticket}
                                         onChange={this.changeHandler}>
                                         {ticketOptions}
                                     </Input>
@@ -205,21 +296,21 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="text"
-                                        name="categoryCreate"
+                                        name="createCategory-name"
                                         placeholder="Name Of Category"
-                                        value={this.state.categoryCreate}
+                                        value={this.state.createCategory.name}
                                         onChange={this.changeHandler}/>
                                 </FormGroup>
                                 <Button type="submit">Create Category</Button>
                             </Form>
                         </DefaultCard>
                         <DefaultCard title="Edit A Category">
-                            <Form onSubmit={this.createCategory}>
+                            <Form onSubmit={this.editCategory}>
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="category"
-                                        value={this.state.category}
+                                        name="editCategory-category"
+                                        value={this.state.editCategory.category}
                                         onChange={this.changeHandler}>
                                         {categoryOptions}
                                     </Input>
@@ -227,9 +318,9 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="text"
-                                        name="categoryEdit"
+                                        name="editCategory-name"
                                         placeholder="New Name Of Category"
-                                        value={this.state.categoryEdit}
+                                        value={this.state.editCategory.name}
                                         onChange={this.changeHandler}/>
                                 </FormGroup>
                                 <Button type="submit">Edit Category</Button>
@@ -240,8 +331,8 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="deleteCategory"
-                                        value={this.state.deleteCategory}
+                                        name="deleteCategory-category"
+                                        value={this.state.deleteCategory.category}
                                         onChange={this.changeHandler}>
                                         {categoryOptions}
                                     </Input>
@@ -252,13 +343,13 @@ class AdminPanel extends Component {
                     </TabPane>
                     <TabPane tabId="users">
                         <DefaultCard title="Change User Role">
-                            <Form onSubmit={this.changeRole}>
+                            <Form onSubmit={this.changeUserRole}>
                                 <FormGroup>
                                     <Label for="role">User</Label>
                                     <Input
                                         type="select"
-                                        name="user"
-                                        value={this.state.user}
+                                        name="changeUserRole-user"
+                                        value={this.state.changeUserRole.user}
                                         onChange={this.changeHandler}>
                                         {userOptions}
                                     </Input>
@@ -267,8 +358,8 @@ class AdminPanel extends Component {
                                     <Label for="role">New Role</Label>
                                     <Input
                                         type="select"
-                                        name="role"
-                                        value={this.state.role}
+                                        name="changeUserRole-role"
+                                        value={this.state.changeUserRole.role}
                                         onChange={this.changeHandler}>
                                         {roleOptions}
                                     </Input>
@@ -281,8 +372,8 @@ class AdminPanel extends Component {
                                 <FormGroup>
                                     <Input
                                         type="select"
-                                        name="deleteUser"
-                                        value={this.state.deleteUser}
+                                        name="deleteUser-user"
+                                        value={this.state.deleteUser.user}
                                         onChange={this.changeHandler}>
                                         {userOptions}
                                     </Input>

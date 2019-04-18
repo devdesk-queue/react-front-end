@@ -45,9 +45,8 @@ class Navigation extends Component {
             ? (
                 <React.Fragment>
                     <DropdownItem>
-                        <NavLink tag={RRNavLink} exact to="/admin-panel" activeClassName="active">Admin Panel</NavLink>
+                        <NavLink tag={RRNavLink} exact to="/admin" activeClassName="active">Admin Panel</NavLink>
                     </DropdownItem>
-                    < DropdownItem divider/>
                 </React.Fragment>
             )
             : null;
@@ -74,7 +73,12 @@ class Navigation extends Component {
                                 <DropdownMenu right>
                                     {token
                                         ? <React.Fragment>
+
+                                                <DropdownItem>
+                                                    <NavLink tag={RRNavLink} exact to="/account" activeClassName="active">Account Panel</NavLink>
+                                                </DropdownItem>
                                                 {admin}
+                                                <DropdownItem divider/>
                                                 <DropdownItem onClick={this.logout}>
                                                     Logout
                                                 </DropdownItem>
@@ -100,9 +104,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = ({account}) => {
-    return {
-        info: account.info
-    }
+    return {info: account.info}
 }
 
 export default connect(mapStateToProps)(Navigation)

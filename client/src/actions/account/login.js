@@ -11,7 +11,6 @@ export const login = data => dispatch => {
     });
     return axios.post('https://devdeskqueue.herokuapp.com/api/auth/login', data)
         .then(response => {
-            console.log(response)
             //Set user token
             localStorage.setItem('token', response.data.token);
             //Dispatch success action

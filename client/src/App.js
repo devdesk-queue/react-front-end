@@ -11,13 +11,22 @@ import CreateTicket from './components/CreateTicket';
 import TicketList from './components/TicketList';
 import {PrivateRoute} from './utility/auth';
 import AdminPanel from './components/AdminPanel';
+import AccountPanel from './components/AccountPanel';
 import {accountInfo} from './actions/account/info';
 
 class App extends Component {
     componentDidMount() {
+
+        //Get account info if the user has a valid token
         const token = localStorage.getItem('token');
+
+        //If the account info is not in redux store, and there's a token
         if (this.props.info.role === undefined && token) {
+
+            //Decode token to get user ID
             const decodedToken = jwtDecode(token);
+
+            //Make API call for user Info
             this
                 .props
                 .accountInfo(decodedToken.subject);
@@ -40,7 +49,8 @@ class App extends Component {
                             <Route exact path="/" component={Home}/>
                             <PrivateRoute path="/view-tickets" component={TicketList}/>
                             <PrivateRoute path="/create-ticket" component={CreateTicket}/>
-                            <PrivateRoute path="/admin-panel" component={AdminPanel}/>
+                            <PrivateRoute path="/admin" component={AdminPanel}/>
+                            <PrivateRoute path="/account" component={AccountPanel}/>
                             <Route path="/login" component={AccountForm}/>
                             <Route path="/register" component={AccountForm}/>
                         </Col>
