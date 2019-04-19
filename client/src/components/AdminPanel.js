@@ -399,7 +399,7 @@ class AdminPanel extends Component {
                                 <Button type="submit">Change Status</Button>
                             </Form>
                         </DefaultCard>
-                        <DefaultCard title="Delete A Ticket">
+                        {/* <DefaultCard title="Delete A Ticket">
                             <Form onSubmit={this.deleteTicket}>
                                 <FormGroup>
                                     <Input
@@ -412,7 +412,7 @@ class AdminPanel extends Component {
                                 </FormGroup>
                                 <Button type="submit">Delete Ticket</Button>
                             </Form>
-                        </DefaultCard>
+                        </DefaultCard> */}
                     </TabPane>
                     <TabPane tabId="categories">
                         <DefaultCard title="Create A Category">
@@ -491,7 +491,7 @@ class AdminPanel extends Component {
                                 <Button type="submit">Change Role</Button>
                             </Form>
                         </DefaultCard>
-                        <DefaultCard title="Delete A User">
+                        {/* <DefaultCard title="Delete A User">
                             <Form onSubmit={this.deleteUser}>
                                 <FormGroup>
                                     <Input
@@ -504,7 +504,7 @@ class AdminPanel extends Component {
                                 </FormGroup>
                                 <Button type="submit">Delete User</Button>
                             </Form>
-                        </DefaultCard>
+                        </DefaultCard> */}
                     </TabPane>
                 </TabContent>
             </div>
