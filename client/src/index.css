@@ -13,6 +13,111 @@ code {
     monospace;
 }
 
+.ticket-title,
+.ticket-form-title {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+.ticket-header {
+  background-color: #73011e;
+  border-radius: 5px;
+  color: white;
+}
+
+.ticket-header,
+.ticket {
+  display: grid;
+  width: 100%;
+  padding: 10px 0;
+  grid-template-columns: 1.5fr 4.5fr 2.5fr 1.5fr 1.5fr 1.5fr 1.5fr;
+  align-items: center;
+  grid-template-areas: "id title categories user status created updated";
+}
+
+.id { grid-area: id; justify-self: center; }
+.title {
+  grid-area: title;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 15px;
+}
+.categories { grid-area: categories; }
+.user { grid-area: user; }
+.status { grid-area: status; }
+.created { grid-area: created; }
+.updated { grid-area: updated; }
+
+.ticket {
+  border: 1px solid black;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+.ticket-header > p,
+.ticket > p {
+  margin-bottom: 0;
+}
+
+.ticket-header > p {
+  text-decoration: underline;
+  font-variant: small-caps;
+}
+
+.ticket.even {
+  background-color: white;
+}
+
+.ticket.odd {
+  background-color: whitesmoke;
+}
+
+.status > span {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-variant: small-caps;
+}
+
+.status.pending > span {
+  background-color: rgba(0, 0, 255, 0.5);
+}
+
+.status.helping > span {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.status.resolved > span {
+  background-color: rgba(0, 255, 0, 0.5);
+}
+
+.ticket-textarea {
+  min-height: 20vh;
+}
+
+.btn-secondary {
+  background-color: #73011e !important;
+  filter: brightness(150%);
+  transition: 200ms !important;
+}
+
+.btn-secondary:hover {
+  filter: brightness(125%);
+}
+
+.navbar img[alt="logo"] {
+  max-width: 200px;
+}
+
+.ticket-form {
+  padding-bottom: 10px;
+}
+
+.navbar {
+  border-radius: 5px;
+}
+
 /*
   color: #a0011e;
   color: #252c2f;
