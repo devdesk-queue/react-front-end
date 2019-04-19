@@ -22,7 +22,7 @@ class CreateTicket extends Component {
                 title: '', // string, max 256 chars, required
                 description: '', // string, required
                 tried: '', // string, optional
-                category: '', // string, required
+                category: [], // array, required
             }
         }
     }
@@ -35,12 +35,23 @@ class CreateTicket extends Component {
 
     changeHandler = event => {
         //Handles every input field change- Updates state
-        this.setState({
-            newTicket: {
-                ...this.state.newTicket,
-                [event.target.name]: event.target.value
-            }
-        });
+        if (event.target.name === 'category') {
+            const category = Array.from(event.target.options)
+                .filter(option => option.selected)
+                .map(option => option.value);
+
+            this.setState(state => ({
+                newTicket: { ...state.newTicket, category }
+            }));
+        } else {
+            const target = event.target;
+            this.setState(state => ({
+                newTicket: {
+                    ...state.newTicket,
+                    [target.name]: target.value
+                }
+            }));
+        }
     }
 
     submitHandler = event => {
@@ -61,8 +72,11 @@ class CreateTicket extends Component {
                 return <option key={cat.id} value={cat.name}>{cat.name}</option>
             });
 
+        const { newTicket } = this.state;
+
         return (
-            <Container>
+            <Container className="ticket-form">
+                <h2 className="ticket-form-title">Create a Ticket</h2>
                 <Row>
                     <Col
                         sm="12"
@@ -78,8 +92,9 @@ class CreateTicket extends Component {
                                     name="title"
                                     placeholder="Title"
                                     maxLength="256"
-                                    value={this.state.title}
-                                    onChange={this.changeHandler}/>
+                                    value={newTicket.title}
+                                    onChange={this.changeHandler}
+                                    required/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="description">Description</Label>
@@ -87,16 +102,19 @@ class CreateTicket extends Component {
                                     type="textarea"
                                     name="description"
                                     placeholder="Description"
-                                    value={this.state.description}
-                                    onChange={this.changeHandler}/>
+                                    className="ticket-textarea"
+                                    value={newTicket.description}
+                                    onChange={this.changeHandler}
+                                    required/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="tried">Tried</Label>
                                 <Input
-                                    type="text"
+                                    type="textarea"
                                     name="tried"
                                     placeholder="I already tried.."
-                                    value={this.state.tried}
+                                    className="ticket-textarea"
+                                    value={newTicket.tried}
                                     onChange={this.changeHandler}/>
                             </FormGroup>
                             <FormGroup>
@@ -104,8 +122,9 @@ class CreateTicket extends Component {
                                 <Input
                                     type="select"
                                     name="category"
-                                    value={this.state.category}
-                                    onChange={this.changeHandler}>
+                                    onChange={this.changeHandler}
+                                    multiple
+                                    required>
                                     {options}
                                 </Input>
                             </FormGroup>
