@@ -7,11 +7,15 @@ import {
 import {
     VIEWALL_TICKETS_SUCCESS
 } from '../actions/tickets/viewAll';
+import {
+    VIEWONE_TICKETS_SUCCESS
+} from '../actions/tickets/viewOne';
 
 const initState = {
     error: null,
     loading: false,
-    tickets: []
+    tickets: [],
+    ticket: {}
 }
 
 export const tickets = (state = initState, action) => {
@@ -30,7 +34,10 @@ export const tickets = (state = initState, action) => {
                 return {
                     error: null,
                     loading: true,
-                    tickets: [...state.tickets]
+                    tickets: [...state.tickets],
+                    ticket: {
+                        ...state.ticket
+                    }
                 }
             case 'SUCCESS':
 
@@ -43,17 +50,24 @@ export const tickets = (state = initState, action) => {
                             tickets: [
                                 ...state.tickets,
                                 action.payload
-                            ]
+                            ],
+                            ticket: {
+                                ...state.ticket
+                            }
                         }
                     case UPDATE_TICKETS_SUCCESS:
+                        const newTicket = state.ticket.id === action.payload.id ? action.payload : {
+                            ...state.ticket
+                        };
                         return {
                             error: null,
                             loading: false,
                             tickets: state.tickets.map(ticket => {
-                                    if (ticket.id === action.payload.id) {
-                                        return action.payload;
-                                    } else return ticket;
-                                })
+                                if (ticket.id === action.payload.id) {
+                                    return action.payload;
+                                } else return ticket;
+                            }),
+                            ticket: newTicket
                         }
                     case VIEWALL_TICKETS_SUCCESS:
                         return {
@@ -61,14 +75,31 @@ export const tickets = (state = initState, action) => {
                             loading: false,
                             tickets: [
                                 ...action.payload
-                            ]
+                            ],
+                            ticket: {
+                                ...state.ticket
+                            }
+                        }
+                    case VIEWONE_TICKETS_SUCCESS:
+                        return {
+                            error: null,
+                            loading: false,
+                            tickets: [
+                                ...state.tickets
+                            ],
+                            ticket: {
+                                ...action.payload
+                            }
                         }
                 }
             case 'ERROR':
                 return {
                     error: action.payload,
                     loading: false,
-                    tickets: [...state.tickets]
+                    tickets: [...state.tickets],
+                    ticket: {
+                        ...state.ticket
+                    }
                 }
             default:
                 return state;

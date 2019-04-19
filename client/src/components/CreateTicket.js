@@ -12,6 +12,7 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import Loading from './Loading';
 
 class CreateTicket extends Component {
     constructor(props) {
@@ -36,12 +37,16 @@ class CreateTicket extends Component {
     changeHandler = event => {
         //Handles every input field change- Updates state
         if (event.target.name === 'category') {
-            const category = Array.from(event.target.options)
+            const category = Array
+                .from(event.target.options)
                 .filter(option => option.selected)
                 .map(option => option.value);
 
             this.setState(state => ({
-                newTicket: { ...state.newTicket, category }
+                newTicket: {
+                    ...state.newTicket,
+                    category
+                }
             }));
         } else {
             const target = event.target;
@@ -59,85 +64,92 @@ class CreateTicket extends Component {
         this
             .props
             .create(this.state.newTicket)
-            .then(response=>response ? this.props.history.push('/') : null);
+            .then(response => response
+                ? this.props.history.push('/')
+                : null);
     }
 
     render() {
 
-        const options = this
-            .props
-            .categories
-            .sort()
-            .map(cat => {
-                return <option key={cat.id} value={cat.name}>{cat.name}</option>
-            });
+        if (this.props.categories.length === 0) {
+            return <Loading/>
+        } else {
 
-        const { newTicket } = this.state;
+            const options = this
+                .props
+                .categories
+                .sort()
+                .map(cat => {
+                    return <option key={cat.id} value={cat.name}>{cat.name}</option>
+                });
 
-        return (
-            <Container className="ticket-form">
-                <h2 className="ticket-form-title">Create a Ticket</h2>
-                <Row>
-                    <Col
-                        sm="12"
-                        md={{
-                        size: 6,
-                        offset: 3
-                    }}>
-                        <Form onSubmit={this.submitHandler}>
-                            <FormGroup>
-                                <Label for="title">Title</Label>
-                                <Input
-                                    type="text"
-                                    name="title"
-                                    placeholder="Title"
-                                    maxLength="256"
-                                    value={newTicket.title}
-                                    onChange={this.changeHandler}
-                                    required/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="description">Description</Label>
-                                <Input
-                                    type="textarea"
-                                    name="description"
-                                    placeholder="Description"
-                                    className="ticket-textarea"
-                                    value={newTicket.description}
-                                    onChange={this.changeHandler}
-                                    required/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="tried">Tried</Label>
-                                <Input
-                                    type="textarea"
-                                    name="tried"
-                                    placeholder="I already tried.."
-                                    className="ticket-textarea"
-                                    value={newTicket.tried}
-                                    onChange={this.changeHandler}/>
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="category">Category</Label>
-                                <Input
-                                    type="select"
-                                    name="category"
-                                    onChange={this.changeHandler}
-                                    multiple
-                                    required>
-                                    {options}
-                                </Input>
-                            </FormGroup>
+            const {newTicket} = this.state;
 
-                            <Button block type="submit">
-                                Create Ticket
-                            </Button>
-                            <span className="text-danger">{this.props.error}</span>
-                        </Form>
-                    </Col>
-                </Row>
-            </Container>
-        )
+            return (
+                <Container className="ticket-form">
+                    <h2 className="ticket-form-title display-4">Create Ticket</h2>
+                    <Row>
+                        <Col
+                            sm="12"
+                            md={{
+                            size: 6,
+                            offset: 3
+                        }}>
+                            <Form onSubmit={this.submitHandler}>
+                                <FormGroup>
+                                    <Label for="title">Title</Label>
+                                    <Input
+                                        type="text"
+                                        name="title"
+                                        placeholder="Title"
+                                        maxLength="256"
+                                        value={newTicket.title}
+                                        onChange={this.changeHandler}
+                                        required/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="description">Description</Label>
+                                    <Input
+                                        type="textarea"
+                                        name="description"
+                                        placeholder="Description"
+                                        className="ticket-textarea"
+                                        value={newTicket.description}
+                                        onChange={this.changeHandler}
+                                        required/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="tried">Tried</Label>
+                                    <Input
+                                        type="textarea"
+                                        name="tried"
+                                        placeholder="I already tried.."
+                                        className="ticket-textarea"
+                                        value={newTicket.tried}
+                                        onChange={this.changeHandler}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="category">Category</Label>
+                                    <Input
+                                        type="select"
+                                        name="category"
+                                        onChange={this.changeHandler}
+                                        multiple
+                                        required>
+                                        {options}
+                                    </Input>
+                                </FormGroup>
+
+                                <Button block type="submit">
+                                    Create Ticket
+                                </Button>
+                                <span className="text-danger">{this.props.error}</span>
+                            </Form>
+                        </Col>
+                    </Row>
+                </Container>
+            )
+        }
     }
 }
 

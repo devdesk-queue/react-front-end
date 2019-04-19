@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Card, CardTitle, CardText, Button} from 'reactstrap';
-import DefaultCard from './DefaultCard';
 
 class Ticket extends Component {
+    goToSingleTicket = _ => {
+        this.props.history.push(`/view-tickets/${this.props.ticket.id}`);
+    }
     render() {
         const {
             created_at,
             updated_at,
             status,
-            id: ticket_id,
+            id,
             title,
             categories,
             student
@@ -17,14 +18,14 @@ class Ticket extends Component {
 
         const even = this.props.even;
         const created = new Date(created_at).toLocaleString().split(',')
-            .map(dt => <span>{dt}<br /></span>);
+            .map((dt,index) => <span key={index}>{dt}<br /></span>);
         const updated = new Date(updated_at).toLocaleString().split(',')
-            .map(dt => <span>{dt}<br /></span>);
-        const cats = categories.map(cat => <span><small>{cat.name}</small><br /></span>);
+            .map((dt,index) => <span key={index}>{dt}<br /></span>);
+        const cats = categories.map(cat => <span key={cat.id}><small>{cat.name}</small><br /></span>);
 
         return (
-            <div className={`ticket ${even ? 'even' : 'odd'}`}>
-                <p className="id">{ticket_id}</p>
+            <div className={`ticket ${even ? 'even' : 'odd'}`} onClick={this.goToSingleTicket}>
+                <p className="id">{id}</p>
                 <p className="title">{title}</p>
                 <p className="categories">{cats}</p>
                 <p className="user">{student.username}</p>
@@ -33,21 +34,6 @@ class Ticket extends Component {
                 <small className="updated">{updated}</small>
             </div>
         );
-
-        // return (
-        //     <DefaultCard title={status}>
-        //         <CardTitle>{title}</CardTitle>
-        //         <CardText>{description}</CardText>
-        //         <CardText>{tried}</CardText>
-        //         <CardText>
-        //             <Button size="sm">Checkout Ticket</Button>
-        //         </CardText>
-        //         <CardText>
-        //             <Button size="sm">Close Ticket</Button>
-        //         </CardText>
-        //         <small className="text-muted">{dateString}</small>
-        //     </DefaultCard>
-        // )
     }
 }
 
