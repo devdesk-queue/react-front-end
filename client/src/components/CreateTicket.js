@@ -112,7 +112,7 @@ class CreateTicket extends Component {
                                     <Input
                                         type="textarea"
                                         name="description"
-                                        placeholder="Description"
+                                        placeholder="I'm having this issue..."
                                         className="ticket-textarea"
                                         value={newTicket.description}
                                         onChange={this.changeHandler}
@@ -123,7 +123,7 @@ class CreateTicket extends Component {
                                     <Input
                                         type="textarea"
                                         name="tried"
-                                        placeholder="I already tried.."
+                                        placeholder="I already tried..."
                                         className="ticket-textarea"
                                         value={newTicket.tried}
                                         onChange={this.changeHandler}/>
