@@ -36,8 +36,8 @@ class TicketList extends Component {
         const filtered = ticket => ticket[eventName] === this.props.accountInfo.id;
 
         event.target.name === 'all'
-            ? this.setState({statusFilter: all})
-            : this.setState({statusFilter: filtered});
+            ? this.setState({userFilter: all})
+            : this.setState({userFilter: filtered});
     }
 
     render() {

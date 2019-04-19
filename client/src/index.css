@@ -65,7 +65,6 @@ code {
 .ticket-header > p {
   text-decoration: underline;
   font-variant: small-caps;
-  cursor: pointer;
 }
 
 .ticket.even {
