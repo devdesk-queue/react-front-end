@@ -88,11 +88,16 @@ code {
 
 .status.helping > span {
   color: #ffffff;
-  background-color: #125172; 
+  background-color: #125172;
 }
 
 .status.resolved > span {
   color: #ffffff;
+  background-color: #00703c;
+}
+
+.status.archived > span {
+  color: #fff;
   background-color: #252c2f;
 }
 
@@ -122,14 +127,63 @@ code {
   border-radius: 5px;
 }
 
+.single-ticket {
+  display: flex;
+}
+
 .single-ticket .group {
   margin: 10px 0;
   font-size: 1.25rem;
+  flex: 1;
 }
 
 .single-ticket .group .subtitle {
   font-size: 2rem !important;
-  color: #002070;  
+  color: #002070;
+  font-variant: small-caps;
+}
+
+input.form-control::placeholder,
+textarea.form-control::placeholder {
+  opacity: .5;
+}
+
+.account-form {
+  margin-top: 15px;
+}
+
+.tab-content .alert {
+  margin-top: .5rem;
+  margin-bottom: -.5rem;
+}
+
+.tab-content {
+  margin-bottom: 15px;
+}
+
+.card h2.display-4 {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.single-ticket-container .card h2.display-4 {
+  font-size: 3.5rem;
+}
+
+h4.display-4 {
+  text-decoration: underline;
+}
+
+.nav-tabs .nav-item {
+  flex: 1;
+}
+
+.display-4 {
+  font-weight: bold !important;
 }
 
 /*
