@@ -9,31 +9,46 @@ class Ticket extends Component {
         const {
             created_at,
             updated_at,
-            description,
             status,
-            student_id,
-            ticket_id,
+            id: ticket_id,
             title,
-            tried
+            categories,
+            student
         } = this.props.ticket;
 
-        const date = new Date(created_at);
-        const dateString = `${date.getHours()}:${date.getMinutes()}`;
+        const even = this.props.even;
+        const created = new Date(created_at).toLocaleString().split(',')
+            .map(dt => <span>{dt}<br /></span>);
+        const updated = new Date(updated_at).toLocaleString().split(',')
+            .map(dt => <span>{dt}<br /></span>);
+        const cats = categories.map(cat => <span><small>{cat.name}</small><br /></span>);
 
         return (
-            <DefaultCard title={status}>
-                <CardTitle>{title}</CardTitle>
-                <CardText>{description}</CardText>
-                <CardText>{tried}</CardText>
-                <CardText>
-                    <Button size="sm">Checkout Ticket</Button>
-                </CardText>
-                <CardText>
-                    <Button size="sm">Close Ticket</Button>
-                </CardText>
-                <small className="text-muted">{dateString}</small>
-            </DefaultCard>
-        )
+            <div className={`ticket ${even ? 'even' : 'odd'}`}>
+                <p className="id">{ticket_id}</p>
+                <p className="title">{title}</p>
+                <p className="categories">{cats}</p>
+                <p className="user">{student.username}</p>
+                <p className={`status ${status.toLowerCase()}`}><span>{status}</span></p>
+                <small className="created">{created}</small>
+                <small className="updated">{updated}</small>
+            </div>
+        );
+
+        // return (
+        //     <DefaultCard title={status}>
+        //         <CardTitle>{title}</CardTitle>
+        //         <CardText>{description}</CardText>
+        //         <CardText>{tried}</CardText>
+        //         <CardText>
+        //             <Button size="sm">Checkout Ticket</Button>
+        //         </CardText>
+        //         <CardText>
+        //             <Button size="sm">Close Ticket</Button>
+        //         </CardText>
+        //         <small className="text-muted">{dateString}</small>
+        //     </DefaultCard>
+        // )
     }
 }
 
@@ -41,4 +56,4 @@ const mapStateToProps = ({tickets}) => {
     return {tickets: tickets.tickets, error: tickets.error, loading: tickets.loading}
 }
 
-export default connect(mapStateToProps, {})(Ticket);
+export default connect(mapStateToProps, {update})(Ticket);
