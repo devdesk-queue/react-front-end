@@ -20,7 +20,7 @@ export const logout = () => dispatch => {
 
         dispatch({
             type: LOGOUT_ACCOUNT_ERROR,
-            payload: error.message
+            payload: error.response.data.message
         });
 
     }

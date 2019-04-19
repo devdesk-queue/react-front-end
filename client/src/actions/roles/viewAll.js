@@ -20,7 +20,7 @@ export const viewAllRoles = _ => dispatch => {
         .catch(error => {
             dispatch({
                 type: VIEWALL_ROLES_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

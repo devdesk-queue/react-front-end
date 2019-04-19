@@ -8,7 +8,7 @@ export const updateTicket = data => dispatch => {
     dispatch({
         type: UPDATE_TICKETS_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .put(`https://devdeskqueue.herokuapp.com/api/tickets/${data.id}`, data.payload)
         .then(response => {
             dispatch({
@@ -19,7 +19,7 @@ export const updateTicket = data => dispatch => {
         .catch(error => {
             dispatch({
                 type: UPDATE_TICKETS_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

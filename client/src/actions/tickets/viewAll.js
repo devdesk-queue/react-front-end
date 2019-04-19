@@ -20,7 +20,7 @@ export const viewAllTickets = _ => dispatch => {
         .catch(error => {
             dispatch({
                 type: VIEWALL_TICKETS_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

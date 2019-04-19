@@ -20,7 +20,7 @@ export const viewAllUsers = _ => dispatch => {
         .catch(error => {
             dispatch({
                 type: VIEWALL_USERS_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

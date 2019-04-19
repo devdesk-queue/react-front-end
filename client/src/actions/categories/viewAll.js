@@ -20,7 +20,7 @@ export const viewAllCategories = _ => dispatch => {
         .catch(error => {
             dispatch({
                 type: VIEWALL_CATEGORIES_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }
