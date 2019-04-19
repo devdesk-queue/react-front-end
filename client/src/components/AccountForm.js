@@ -89,7 +89,8 @@ class AccountForm extends Component {
                         name="password2"
                         placeholder="password123"
                         value={this.state.password2}
-                        onChange={this.changeHandler}/>
+                        onChange={this.changeHandler}
+                        required/>
                 </FormGroup>
             )
             : null;
@@ -114,7 +115,8 @@ class AccountForm extends Component {
                         name="email"
                         placeholder="your@email.com"
                         value={this.state.email}
-                        onChange={this.changeHandler}/>
+                        onChange={this.changeHandler}
+                        required/>
                 </FormGroup>
             : null;
 
@@ -136,7 +138,8 @@ class AccountForm extends Component {
                                     name="username"
                                     placeholder="username"
                                     value={this.state.username}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    required/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="password">Password</Label>
@@ -145,7 +148,8 @@ class AccountForm extends Component {
                                     name="password"
                                     placeholder="password123"
                                     value={this.state.password}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    required/>
                             </FormGroup>
                             {confirmPassword}
                             <Button block type="submit">
