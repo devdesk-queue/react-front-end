@@ -12,6 +12,7 @@ import TicketList from './components/TicketList';
 import {PrivateRoute} from './utility/auth';
 import AdminPanel from './components/AdminPanel';
 import AccountPanel from './components/AccountPanel';
+import SingleTicket from './components/SingleTicket';
 import {accountInfo} from './actions/account/info';
 
 class App extends Component {
@@ -47,7 +48,8 @@ class App extends Component {
                     <Row>
                         <Col>
                             <Route exact path="/" component={Home}/>
-                            <PrivateRoute path="/view-tickets" component={TicketList}/>
+                            <PrivateRoute exact path="/view-tickets" component={TicketList}/>
+                            <PrivateRoute path="/view-tickets/:id" component={SingleTicket}/>
                             <PrivateRoute path="/create-ticket" component={CreateTicket}/>
                             <PrivateRoute path="/admin" component={AdminPanel}/>
                             <PrivateRoute path="/account" component={AccountPanel}/>

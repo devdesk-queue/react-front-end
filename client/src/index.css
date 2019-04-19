@@ -34,6 +34,7 @@ code {
   grid-template-columns: 1.5fr 4.5fr 2.5fr 1.5fr 1.5fr 1.5fr 1.5fr;
   align-items: center;
   grid-template-areas: "id title categories user status created updated";
+  text-decoration: none;
 }
 
 .id { grid-area: id; justify-self: center; }
