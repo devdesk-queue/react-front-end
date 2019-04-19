@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
+    Alert,
     TabContent,
     TabPane,
     Nav,
@@ -35,6 +36,7 @@ class AdminPanel extends Component {
 
         this.state = {
             activeTab: 'tickets',
+            success: false,
             assignHelperToTicket: {
                 ticket: '',
                 helper: ''
@@ -176,6 +178,9 @@ class AdminPanel extends Component {
                     helper_id: this.state.assignHelperToTicket.helper,
                     status: 'helping' //If ticket is being assigned to someone, then its status should probably always updated to open
                 }
+            }).then(() => {
+                this.setState({ success: 'Helper Assigned' });
+                this.successTimeout();
             });
     }
 
@@ -188,9 +193,7 @@ class AdminPanel extends Component {
             .tickets
             .tickets
             .find(ticket => {
-                return ticket
-                    .id
-                    .toString() === this.state.changeTicketStatus.ticket
+                return ticket.id === Number(this.state.changeTicketStatus.ticket)
             });
 
         //Default payload
@@ -207,35 +210,50 @@ class AdminPanel extends Component {
         // API defaults
         this
             .props
-            .updateTicket({id: this.state.changeTicketStatus.ticket, payload})
+            .updateTicket({id: this.state.changeTicketStatus.ticket, payload}).then(() => {
+                this.setState({ success: 'Ticket Status Changed' });
+                this.successTimeout();
+            });
     }
 
     deleteTicket = event => {
         event.preventDefault();
         this
             .props
-            .deleteTicket(this.state.deleteTicket);
+            .deleteTicket(this.state.deleteTicket).then(() => {
+                this.setState({ success: 'Ticket Deleted' });
+                this.successTimeout();
+            });
     }
 
     createCategory = event => {
         event.preventDefault();
         this
             .props
-            .createCategory(this.state.createCategory);
+            .createCategory(this.state.createCategory).then(() => {
+                this.setState({ success: 'Category Created' });
+                this.successTimeout();
+            });
     }
 
     updateCategory = event => {
         event.preventDefault();
         this
             .props
-            .updateCategory(this.state.updateCategory);
+            .updateCategory(this.state.updateCategory).then(() => {
+                this.setState({ success: 'Category Updated' });
+                this.successTimeout();
+            });
     }
 
     deleteCategory = event => {
         event.preventDefault();
         this
             .props
-            .deleteCategory(this.state.deleteCategory.id);
+            .deleteCategory(this.state.deleteCategory.id).then(() => {
+                this.setState({ success: 'Category Deleted' });
+                this.successTimeout();
+            });
     }
 
     changeUserRole = event => {
@@ -247,6 +265,9 @@ class AdminPanel extends Component {
                 payload: {
                     role: this.state.changeUserRole.role
                 }
+            }).then(() => {
+                this.setState({ success: 'User Role Updated' });
+                this.successTimeout();
             });
     }
 
@@ -254,7 +275,16 @@ class AdminPanel extends Component {
         event.preventDefault();
         this
             .props
-            .deleteUser(this.state.deleteUser.id);
+            .deleteUser(this.state.deleteUser.id).then(() => {
+                this.setState({ success: 'User Deleted' });
+                this.successTimeout();
+            });
+    }
+
+    successTimeout() {
+        setTimeout(() => this.setState({
+            success: false
+        }), 3000);
     }
 
     render() {
@@ -296,7 +326,7 @@ class AdminPanel extends Component {
                 return <option key={role.id} value={role.name}>{role.name}</option>
             });
 
-        const statusOptions = ['pending', 'helping', 'resolved'].map(status => {
+        const statusOptions = ['pending', 'helping', 'resolved', 'archived'].map(status => {
             return <option key={status} value={status}>{status}</option>
         });
 
@@ -311,7 +341,7 @@ class AdminPanel extends Component {
 
         return (
             <div className="text-center">
-                <h1 className="display-3">Admin Panel</h1>
+                <h1 className="display-4">Admin Panel</h1>
                 <Nav tabs style={{cursor: 'pointer'}}>
                     <NavItem>
                         <NavLink
@@ -321,7 +351,7 @@ class AdminPanel extends Component {
                             onClick={() => {
                             this.toggle('tickets');
                         }}>
-                            <h2 className="display-4">Tickets</h2>
+                            <h2 className="display-5">Tickets</h2>
                         </NavLink>
                     </NavItem>
                     <NavItem>
@@ -332,7 +362,7 @@ class AdminPanel extends Component {
                             onClick={() => {
                             this.toggle('categories');
                         }}>
-                            <h2 className="display-4">Categories</h2>
+                            <h2 className="display-5">Categories</h2>
                         </NavLink>
                     </NavItem>
                     <NavItem>
@@ -343,11 +373,12 @@ class AdminPanel extends Component {
                             onClick={() => {
                             this.toggle('users');
                         }}>
-                            <h2 className="display-4">Users</h2>
+                            <h2 className="display-5">Users</h2>
                         </NavLink>
                     </NavItem>
                 </Nav>
                 <TabContent activeTab={this.state.activeTab}>
+                    {this.state.success && <Alert color="success">{this.state.success}</Alert>}
                     <TabPane tabId="tickets">
                         <DefaultCard title="Assign Helper To Ticket">
                             <Form onSubmit={this.assignHelperToTicket}>
