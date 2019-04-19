@@ -12,7 +12,7 @@ export const create = data => dispatch => {
             dispatch({type: CREATE_TICKETS_SUCCESS, payload: response.data});
             return true;
         })
-        .catch(error => {
-            dispatch({type: CREATE_TICKETS_ERROR, payload: error.message});
+        .catch(({response}) => {
+            dispatch({type: CREATE_TICKETS_ERROR, payload: response.data.message});
         });
 }

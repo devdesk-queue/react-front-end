@@ -16,10 +16,10 @@ export const updateUser = data => dispatch => {
                 payload: response.data
             });
         })
-        .catch(error => {
+        .catch(({response}) => {
             dispatch({
                 type: UPDATE_USERS_ERROR,
-                payload: error.message
+                payload: response.data.message
             });
         });
 }

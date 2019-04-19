@@ -10,36 +10,36 @@ import {
     Form,
     FormGroup,
     Label,
-    Input
+    Input,
 } from 'reactstrap';
+import Error from './Error';
 
 class CreateTicket extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            newTicket: {
-                title: '', // string, max 256 chars, required
-                description: '', // string, required
-                tried: '', // string, optional
-                category: '', // string, required
-            }
+            title: '', // string, max 256 chars, required
+            description: '', // string, required
+            tried: '', // string, optional
+            category: '', // string, required
         }
     }
 
     componentDidMount() {
         this
             .props
-            .viewAllCategories();
+            .viewAllCategories()
+            .then(response => {
+                console.log(response[0].name)
+                this.setState({category: response[0].name});
+            });
     }
 
     changeHandler = event => {
         //Handles every input field change- Updates state
         this.setState({
-            newTicket: {
-                ...this.state.newTicket,
-                [event.target.name]: event.target.value
-            }
+            [event.target.name]: event.target.value
         });
     }
 
@@ -47,8 +47,10 @@ class CreateTicket extends Component {
         event.preventDefault();
         this
             .props
-            .create(this.state.newTicket)
-            .then(response=>response ? this.props.history.push('/') : null);
+            .create(this.state)
+            .then(response => response
+                ? this.props.history.push('/')
+                : null);
     }
 
     render() {
@@ -70,6 +72,7 @@ class CreateTicket extends Component {
                         size: 6,
                         offset: 3
                     }}>
+                        <h1 className="display-3">Create Ticket</h1>
                         <Form onSubmit={this.submitHandler}>
                             <FormGroup>
                                 <Label for="title">Title</Label>
@@ -113,7 +116,7 @@ class CreateTicket extends Component {
                             <Button block type="submit">
                                 Create Ticket
                             </Button>
-                            <span className="text-danger">{this.props.error}</span>
+                            <Error error={this.props.error} />
                         </Form>
                     </Col>
                 </Row>

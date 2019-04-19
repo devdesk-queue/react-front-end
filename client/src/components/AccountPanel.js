@@ -11,6 +11,7 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import Error from './Error';
 
 class AccountPanel extends Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class AccountPanel extends Component {
                         md={{
                         size: 6,
                         offset: 3
-                    }}>
+                    }} className="text-center">
                         <h1 className="display-3">Account Panel</h1>
                         Update your account information below. The new password fields are optional, but
                         you must enter your Current Password to make any changes.
@@ -97,7 +98,8 @@ class AccountPanel extends Component {
                                     name="username"
                                     placeholder="username"
                                     value={this.state.username}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    className="text-center"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="description">Email</Label>
@@ -106,7 +108,8 @@ class AccountPanel extends Component {
                                     name="email"
                                     placeholder="Email"
                                     value={this.state.email}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    className="text-center"/>
                             </FormGroup>
 
                             <FormGroup>
@@ -116,7 +119,8 @@ class AccountPanel extends Component {
                                     name="newPassword"
                                     placeholder="New Password"
                                     value={this.state.newPassword}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    className="text-center"/>
                             </FormGroup>
                             <FormGroup>
                                 <Label for="tried">Repeat New Password</Label>
@@ -125,7 +129,8 @@ class AccountPanel extends Component {
                                     name="newPassword2"
                                     placeholder="New Password"
                                     value={this.state.newPassword2}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    className="text-center"/>
                             </FormGroup>
 
                             <FormGroup>
@@ -135,13 +140,14 @@ class AccountPanel extends Component {
                                     name="currentPassword"
                                     placeholder="Current Password"
                                     value={this.state.currentPassword}
-                                    onChange={this.changeHandler}/>
+                                    onChange={this.changeHandler}
+                                    className="text-center"/>
                             </FormGroup>
 
                             <Button block type="submit">
                                 Update User
                             </Button>
-                            <span className="text-danger">{this.props.error}</span>
+                            <Error error={this.props.error} />
                         </Form>
                     </Col>
                 </Row>
@@ -150,8 +156,8 @@ class AccountPanel extends Component {
     }
 }
 
-const mapStateToProps = ({account}) => {
-    return {accountInfo: account.info}
+const mapStateToProps = ({account, users}) => {
+    return {accountInfo: account.info, error: users.error}
 }
 
 export default connect(mapStateToProps, {updateUser})(AccountPanel);
