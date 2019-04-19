@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 
+import Loading from './Loading';
 import DefaultCard from './DefaultCard';
 import {viewOneTicket} from '../actions/tickets/viewOne';
 import {updateTicket} from '../actions/tickets/update';
@@ -51,7 +52,7 @@ class SingleTicket extends Component {
     }
     render() {
 
-        if (this.props.ticket.status !== undefined && this.props.currentUser.role !== undefined) {
+        if (this.props.ticket.id && this.props.ticket.id.toString() === this.props.match.params.id && this.props.currentUser.role !== undefined) {
 
             const {
                 created_at,
@@ -98,7 +99,7 @@ class SingleTicket extends Component {
                                 <h4 className="display-4 subtitle">categories</h4>
                                 {categoryDivs}
                             </div>
-                            
+
                             <div className="group">
                                 <h4 className="display-4 subtitle">problem</h4>
                                 {title}
@@ -126,7 +127,7 @@ class SingleTicket extends Component {
                 </div>
             )
         } else 
-            return <div></div>
+            return <Loading/>
     }
 }
 
