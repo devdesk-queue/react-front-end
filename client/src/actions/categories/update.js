@@ -8,7 +8,7 @@ export const updateCategory = data => dispatch => {
     dispatch({
         type: UPDATE_CATEGORIES_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .put(`https://devdeskqueue.herokuapp.com/api/categories/${data.id}`, {name: data.name})
         .then(response => {
             dispatch({
@@ -19,7 +19,7 @@ export const updateCategory = data => dispatch => {
         .catch(error => {
             dispatch({
                 type: UPDATE_CATEGORIES_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

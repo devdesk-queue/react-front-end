@@ -39,13 +39,11 @@ export const users = (state = initState, action) => {
                         return {
                             error: null,
                             loading: false,
-                            users: [
-                                state.users.map(user => {
-                                    if (user.id === action.payload.id) {
-                                        return action.payload;
-                                    } else return user;
-                                })
-                            ]
+                            users: state.users.map(user => {
+                                if (user.id === action.payload.id) {
+                                    return action.payload;
+                                } else return user;
+                            })
                         }
                     case VIEWALL_USERS_SUCCESS:
                         return {
@@ -61,6 +59,8 @@ export const users = (state = initState, action) => {
                                 return user.id !== action.payload;
                             })
                         }
+                    default:
+                        return state;
                 }
             case 'ERROR':
                 return {

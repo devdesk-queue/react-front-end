@@ -20,7 +20,7 @@ export const accountInfo = id => dispatch => {
         .catch(error => {
             dispatch({
                 type: INFO_ACCOUNT_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

@@ -22,7 +22,7 @@ export const login = data => dispatch => {
         .catch(error => {
             dispatch({
                 type: LOGIN_ACCOUNT_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

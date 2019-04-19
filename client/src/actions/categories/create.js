@@ -8,7 +8,7 @@ export const createCategory = newCategory => dispatch => {
     dispatch({
         type: CREATE_CATEGORIES_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .post('https://devdeskqueue.herokuapp.com/api/categories', newCategory)
         .then(response => {
             dispatch({
@@ -19,7 +19,7 @@ export const createCategory = newCategory => dispatch => {
         .catch(error => {
             dispatch({
                 type: CREATE_CATEGORIES_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

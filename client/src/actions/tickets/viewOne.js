@@ -8,7 +8,7 @@ export const viewOneTicket = id => dispatch => {
     dispatch({
         type: VIEWONE_TICKETS_INIT
     });
-    axiosWithAuth()
+    return axiosWithAuth()
         .get(`https://devdeskqueue.herokuapp.com/api/tickets/${id}`)
         .then(response => {
             dispatch({
@@ -19,7 +19,7 @@ export const viewOneTicket = id => dispatch => {
         .catch(error => {
             dispatch({
                 type: VIEWONE_TICKETS_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

@@ -22,7 +22,7 @@ export const register = data => dispatch => {
         .catch(error => {
             dispatch({
                 type: REGISTER_ACCOUNT_ERROR,
-                payload: error.message
+                payload: error.response.data.message
             });
         });
 }

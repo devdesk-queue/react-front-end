@@ -41,10 +41,10 @@ class AccountPanel extends Component {
         // then the redux store might not have retrieve the user info yet, so here when
         // the account info is retrieved from API and the store mapped props update we
         // update the username and email field.
-        if (nextProps.accountInfo && nextProps.accountInfo.role !== undefined && this.state.username === '') 
+        if (nextProps.accountInfo && nextProps.accountInfo.role !== undefined && this.state.username === '')
             this.setState({username: nextProps.accountInfo.username, email: nextProps.accountInfo.email});
         }
-    
+
     changeHandler = event => {
         //Handles every input field change- Updates state
         this.setState({
@@ -86,10 +86,10 @@ class AccountPanel extends Component {
                         size: 6,
                         offset: 3
                     }}>
-                        <h1 className="display-3">Account Panel</h1>
-                        Update your account information below. The new password fields are optional, but
-                        you must enter your Current Password to make any changes.
-                        <Form onSubmit={this.submitHandler}>
+                        <h1 className="display-4">Account Panel</h1>
+                        Update your account information below. The new password fields are <b>optional</b>, but
+                        you must enter your current password to make any changes.
+                        <Form onSubmit={this.submitHandler} className="account-form">
                             <FormGroup>
                                 <Label for="title">Username</Label>
                                 <Input
