@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {update} from '../actions/tickets/update';
 import {Card, CardTitle, CardText, Button} from 'reactstrap';
 import DefaultCard from './DefaultCard';
 
@@ -56,4 +55,4 @@ const mapStateToProps = ({tickets}) => {
     return {tickets: tickets.tickets, error: tickets.error, loading: tickets.loading}
 }
 
-export default connect(mapStateToProps, {update})(Ticket);
+export default connect(mapStateToProps)(Ticket);
