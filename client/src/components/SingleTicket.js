@@ -92,18 +92,18 @@ class SingleTicket extends Component {
                 : null;
 
             return (
-                <div>
+                <div className="single-ticket-container">
                     <DefaultCard title={status}>
                         <div className="single-ticket">
-                            <div className="group">
+                            {/* <div className="group">
                                 <h4 className="display-4 subtitle">categories</h4>
                                 {categoryDivs}
-                            </div>
+                            </div> */}
 
-                            <div className="group">
+                            {/* <div className="group">
                                 <h4 className="display-4 subtitle">problem</h4>
                                 {title}
-                            </div>
+                            </div> */}
 
                             <div className="group">
                                 <h4 className="display-4 subtitle">description</h4>
@@ -122,11 +122,11 @@ class SingleTicket extends Component {
                         </div>
                         <small className="text-muted">{`Created by ${student.username} at `}{created}</small>
                         {this.props.ticket.helper && <small className="text-muted">{`Helped by ${this.props.ticket.helper.username} on or before `}{updated}</small>}
-                        {this.props.ticket.status === 'resolved' && <small className="text-muted">{`Resolved on or before`}{updated}</small>}
+                        {this.props.ticket.status === 'resolved' && <small className="text-muted">{`Resolved on or before `}{updated}</small>}
                     </DefaultCard>
                 </div>
             )
-        } else 
+        } else
             return <Loading/>
     }
 }
