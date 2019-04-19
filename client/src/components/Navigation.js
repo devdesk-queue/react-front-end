@@ -14,7 +14,8 @@ import {
     DropdownItem
 } from 'reactstrap';
 import {connect} from 'react-redux';
-import logo from './logo.png';
+
+import logo from './lambda-logo.svg';
 
 class Navigation extends Component {
     constructor(props) {

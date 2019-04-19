@@ -34,12 +34,24 @@ class TicketList extends Component {
         // "created_at": "2019-04-15 07:16:35",         "updated_at": "2019-04-15
         // 07:16:35",         "categories": ["Administration", "ISA"]     } ]
 
-        const tickets = this.props.tickets.map(ticket => <Ticket key={ticket.id} ticket={ticket}/>);
+        this.props.tickets.sort((a, b) => a.id - b.id);
+
+        const tickets = this.props.tickets.map((ticket, i) => <Ticket key={ticket.id} ticket={ticket} even={i % 2 === 0}/>);
 
         return (
             <Container>
                 <Row>
                     <Col>
+                        <h2 className="ticket-title">Ticket Details</h2>
+                        <div className="ticket-header">
+                            <p className="id">ID</p>
+                            <p className="title">Title</p>
+                            <p className="categories">Categories</p>
+                            <p className="user">User</p>
+                            <p className="status">Status</p>
+                            <p className="created">Created</p>
+                            <p className="updated">Updated</p>
+                        </div>
                         {tickets}
                     </Col>
                 </Row>
