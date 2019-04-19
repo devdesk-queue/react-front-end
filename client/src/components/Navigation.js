@@ -14,9 +14,10 @@ import {
     DropdownItem
 } from 'reactstrap';
 import {connect} from 'react-redux';
-import logo from './logo.png';
 
-class Navigation extends Component {
+import logo from './lambda-logo.svg';
+
+export default class Navigation extends Component {
     constructor(props) {
         super(props);
         this.toggle = this
