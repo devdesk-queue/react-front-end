@@ -17,10 +17,10 @@ class Ticket extends Component {
 
         const even = this.props.even;
         const created = new Date(created_at).toLocaleString().split(',')
-            .map(dt => <span>{dt}<br /></span>);
+            .map((dt,index) => <span key={index}>{dt}<br /></span>);
         const updated = new Date(updated_at).toLocaleString().split(',')
-            .map(dt => <span>{dt}<br /></span>);
-        const cats = categories.map(cat => <span><small>{cat.name}</small><br /></span>);
+            .map((dt,index) => <span key={index}>{dt}<br /></span>);
+        const cats = categories.map(cat => <span key={cat.id}><small>{cat.name}</small><br /></span>);
 
         return (
             <div className={`ticket ${even ? 'even' : 'odd'}`}>
