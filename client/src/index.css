@@ -65,6 +65,7 @@ code {
 .ticket-header > p {
   text-decoration: underline;
   font-variant: small-caps;
+  cursor: pointer;
 }
 
 .ticket.even {
@@ -83,7 +84,7 @@ code {
 
 .status.pending > span {
   color: #ffffff;
-  background-color: #bb1333;
+  background-color: #002070;
 }
 
 .status.helping > span {
@@ -136,5 +137,5 @@ code {
   color: #bb1333; #002070
   color: #252c2f; #1e50ee
   color: #125172; #55596d
-  color: #ffffff; #08addd
+  color: #ffffff; #08addd #343a40
 } */
