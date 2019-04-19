@@ -21,7 +21,7 @@ code {
 }
 
 .ticket-header {
-  background-color: #a0011e;
+  background-color: #bb1333;
   border-radius: 5px;
   color: white;
 }
@@ -84,12 +84,12 @@ code {
 
 .status.pending > span {
   color: #ffffff;
-  background-color: #a0011e;
+  background-color: #bb1333;
 }
 
 .status.helping > span {
   color: #ffffff;
-  background-color: #125172;
+  background-color: #125172; 
 }
 
 .status.resolved > span {
@@ -124,8 +124,8 @@ code {
 }
 
 /*
-  color: #a0011e;
-  color: #252c2f;
-  color: #125172;
-  color: #ffffff;
+  color: #bb1333; #002070
+  color: #252c2f; #1e50ee
+  color: #125172; #55596d
+  color: #ffffff; #08addd
 } */

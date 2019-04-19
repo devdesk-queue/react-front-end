@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import {connect} from 'react-redux';
 
-import logo from './lambda-logo.svg';
+import logo from './Lambda_Logo.png';
 
 class Navigation extends Component {
     constructor(props) {
