@@ -312,7 +312,7 @@ class AdminPanel extends Component {
         return (
             <div className="text-center">
                 <h1 className="display-3">Admin Panel</h1>
-                <Nav tabs>
+                <Nav tabs style={{cursor: 'pointer'}}>
                     <NavItem>
                         <NavLink
                             className={classnames({
