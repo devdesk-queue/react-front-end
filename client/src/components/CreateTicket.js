@@ -76,7 +76,7 @@ class CreateTicket extends Component {
 
         return (
             <Container className="ticket-form">
-                <h2 className="ticket-form-title">Create a Ticket</h2>
+                <h2 className="ticket-form-title display-4">Create Ticket</h2>
                 <Row>
                     <Col
                         sm="12"

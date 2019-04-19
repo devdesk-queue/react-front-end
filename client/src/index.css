@@ -16,7 +16,6 @@ code {
 .ticket-title,
 .ticket-form-title {
   text-align: center;
-  text-transform: uppercase;
   margin-bottom: 15px;
 }
 
@@ -98,7 +97,7 @@ code {
 }
 
 .ticket-textarea {
-  min-height: 20vh;
+  min-height: 17vh;
 }
 
 .btn-secondary {
@@ -121,6 +120,16 @@ code {
 
 .navbar {
   border-radius: 5px;
+}
+
+.single-ticket .group {
+  margin: 10px 0;
+  font-size: 1.25rem;
+}
+
+.single-ticket .group .subtitle {
+  font-size: 2rem !important;
+  color: #002070;  
 }
 
 /*

@@ -45,7 +45,7 @@ class TicketList extends Component {
             <Container>
                 <Row>
                     <Col>
-                        <h2 className="ticket-title">Ticket Details</h2>
+                        <h2 className="ticket-title display-4">Ticket Details</h2>
                         <div className="ticket-header">
                             <p className="id">ID</p>
                             <p className="title">Title</p>
