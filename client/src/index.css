@@ -21,7 +21,7 @@ code {
 }
 
 .ticket-header {
-  background-color: #73011e;
+  background-color: #a0011e;
   border-radius: 5px;
   color: white;
 }
@@ -55,6 +55,7 @@ code {
   border: 1px solid black;
   margin: 5px 0;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .ticket-header > p,
@@ -82,15 +83,18 @@ code {
 }
 
 .status.pending > span {
-  background-color: rgba(0, 0, 255, 0.5);
+  color: #ffffff;
+  background-color: #a0011e;
 }
 
 .status.helping > span {
-  background-color: rgba(255, 0, 0, 0.5);
+  color: #ffffff;
+  background-color: #125172;
 }
 
 .status.resolved > span {
-  background-color: rgba(0, 255, 0, 0.5);
+  color: #ffffff;
+  background-color: #252c2f;
 }
 
 .ticket-textarea {

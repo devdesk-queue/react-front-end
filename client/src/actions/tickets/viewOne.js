@@ -9,7 +9,7 @@ export const viewOneTicket = id => dispatch => {
         type: VIEWONE_TICKETS_INIT
     });
     axiosWithAuth()
-        .put(`https://devdeskqueue.herokuapp.com/api/tickets/${id}`)
+        .get(`https://devdeskqueue.herokuapp.com/api/tickets/${id}`)
         .then(response => {
             dispatch({
                 type: VIEWONE_TICKETS_SUCCESS,

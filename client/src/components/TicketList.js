@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {viewAllTickets} from '../actions/tickets/viewAll';
 import {Container, Row, Col} from 'reactstrap';
@@ -36,7 +37,9 @@ class TicketList extends Component {
 
         this.props.tickets.sort((a, b) => a.id - b.id);
 
-        const tickets = this.props.tickets.map((ticket, i) => <Ticket key={ticket.id} ticket={ticket} even={i % 2 === 0}/>);
+        const TicketWithRouter = withRouter(Ticket);
+
+        const tickets = this.props.tickets.map((ticket, i) => <TicketWithRouter key={ticket.id} ticket={ticket} even={i % 2 === 0}/>);
 
         return (
             <Container>

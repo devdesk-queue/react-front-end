@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 class Ticket extends Component {
+    goToSingleTicket = _ => {
+        this.props.history.push(`/view-tickets/${this.props.ticket.id}`);
+    }
     render() {
         const {
             created_at,
             updated_at,
             status,
-            id: ticket_id,
+            id,
             title,
             categories,
             student
@@ -21,8 +24,8 @@ class Ticket extends Component {
         const cats = categories.map(cat => <span key={cat.id}><small>{cat.name}</small><br /></span>);
 
         return (
-            <div className={`ticket ${even ? 'even' : 'odd'}`}>
-                <p className="id">{ticket_id}</p>
+            <div className={`ticket ${even ? 'even' : 'odd'}`} onClick={this.goToSingleTicket}>
+                <p className="id">{id}</p>
                 <p className="title">{title}</p>
                 <p className="categories">{cats}</p>
                 <p className="user">{student.username}</p>
